@@ -33,7 +33,7 @@ HSP est une plateforme innovante permettant de mettre en relation les hôpitaux 
 
 1. **Cloner le dépôt** :
    ```bash
-   git clone https://github.com/votre-utilisateur/HSP.git
+   git clone https://github.com/hdidogs/HSP
    cd HSP
    ```
 
@@ -60,9 +60,9 @@ HSP est une plateforme innovante permettant de mettre en relation les hôpitaux 
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
    DB_PORT=3306
-   DB_DATABASE=hsp_db
+   DB_DATABASE=hsp
    DB_USERNAME=root
-   DB_PASSWORD=secret
+   DB_PASSWORD=
    ```
 
 6. **Migrer les bases de données** :
@@ -70,14 +70,15 @@ HSP est une plateforme innovante permettant de mettre en relation les hôpitaux 
    php artisan migrate
    ```
 
-7. **Démarrer le serveur** :
-   ```bash
-   php artisan serve
-   ```
-
-8. **Compiler les assets** :
+7. **Compiler les assets** :
    ```bash
    npm run dev
+   npm install 
+   ```
+   
+8. **Démarrer le serveur** :
+   ```bash
+   php artisan serve
    ```
 
 Votre application est maintenant en cours d'exécution sur `http://localhost:8000`.
