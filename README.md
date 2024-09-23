@@ -75,7 +75,11 @@ HSP est une plateforme innovante permettant de mettre en relation les hôpitaux 
    npm run dev
    npm install 
    ```
-   
+
+8. **Initilisation Seeder** :
+   ```bash
+   php artisan db:seed --class=RoleSeeder
+   ```
 8. **Démarrer le serveur** :
    ```bash
    php artisan serve
