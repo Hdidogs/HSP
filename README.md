@@ -1,66 +1,139 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# HSP - Hospital Social Platform
 
-## About Laravel
+HSP est une plateforme innovante permettant de mettre en relation les hôpitaux et les professionnels de santé avec des fonctionnalités de chat en ligne, d'actualités et de gestion d'offres d'emploi. Cette application vise à faciliter la communication et la collaboration entre différents acteurs du secteur médical.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fonctionnalités principales
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Chat en ligne** : Messagerie en temps réel pour faciliter la communication entre les utilisateurs.
+- **Actualités et annonces** : Système similaire à Twitter, où les utilisateurs peuvent publier des nouvelles et des offres d’emploi.
+- **Groupes et utilisateurs** : Chaque utilisateur appartient à un ou plusieurs groupes (Étudiant, Médecin, Administrateur, Entreprise Partenaire) permettant des échanges ciblés.
+- **Gestion des offres d'emploi** : Les utilisateurs peuvent postuler directement aux offres proposées par les hôpitaux ou entreprises partenaires.
+- **Authentification sécurisée** : Utilisation de JetStream pour une authentification à deux facteurs (2FA) et la vérification des emails à la création d’un compte.
+- **Réinitialisation de mot de passe** : Possibilité de réinitialiser son mot de passe via un email de récupération.
+  
+## Table des matières
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Technologies utilisées](#technologies-utilisées)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Fonctionnalités détaillées](#fonctionnalités-détaillées)
+- [Contributions](#contributions)
+- [Licence](#licence)
 
-## Learning Laravel
+## Technologies utilisées
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Laravel** : Framework PHP puissant et flexible, permettant une architecture propre et évolutive.
+- **JetStream** : Pour la gestion des fonctionnalités d'authentification, de vérification d'e-mail, de réinitialisation de mot de passe, et de 2FA.
+- **Livewire** : Utilisé pour les interactions en temps réel avec l’interface utilisateur, notamment pour le chat.
+- **Tailwind CSS** : Pour un design moderne et responsive.
+- **MySQL** : Base de données relationnelle pour la gestion des utilisateurs, des groupes et des publications.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Cloner le dépôt** :
+   ```bash
+   git clone https://github.com/hdidogs/HSP
+   cd HSP
+   ```
 
-## Laravel Sponsors
+2. **Installer les dépendances** :
+   ```bash
+   composer install
+   npm install
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. **Créer un fichier `.env`** :
+   Copiez le fichier `.env.example` et renommez-le en `.env` :
+   ```bash
+   cp .env.example .env
+   ```
 
-### Premium Partners
+4. **Générer la clé d'application** :
+   ```bash
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+5. **Configurer la base de données** :
+   Dans le fichier `.env`, configurez vos paramètres de base de données :
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=hsp
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
 
-## Contributing
+6. **Migrer les bases de données** :
+   ```bash
+   php artisan migrate
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+7. **Compiler les assets** :
+   ```bash
+   npm run dev
+   npm install 
+   ```
 
-## Code of Conduct
+8. **Initilisation Seeder** :
+   ```bash
+   php artisan db:seed --class=RoleSeeder
+   ```
+8. **Démarrer le serveur** :
+   ```bash
+   php artisan serve
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Votre application est maintenant en cours d'exécution sur `http://localhost:8000`.
 
-## Security Vulnerabilities
+## Configuration
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **JetStream et 2FA** :
+   JetStream est configuré pour permettre la gestion des utilisateurs avec la validation des emails et l'authentification à deux facteurs. Les utilisateurs peuvent activer le 2FA dans leurs paramètres de compte.
 
-## License
+- **Email de confirmation** :
+   Lors de la création d’un compte, un email de confirmation est envoyé à l’utilisateur. Si l’email n’est pas confirmé, l’utilisateur ne pourra pas accéder à certaines parties de la plateforme.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Réinitialisation du mot de passe** :
+   En cas d’oubli de mot de passe, l’utilisateur peut demander un lien de réinitialisation via son email.
+
+## Fonctionnalités détaillées
+
+### Groupes d'utilisateurs
+
+- **Étudiant** : Accès limité à certaines fonctionnalités, accès aux offres d'emploi et discussions.
+- **Médecin** : Accès complet aux actualités médicales et aux offres d’emploi, ainsi qu’aux groupes de discussion entre professionnels.
+- **Administrateur** : Gestion de la plateforme, modération des utilisateurs et des groupes.
+- **Entreprise partenaire** : Publier des offres d'emploi et interagir avec les professionnels de santé.
+
+### Chat en ligne
+
+- Discussion en temps réel entre les membres d'un groupe ou directement entre utilisateurs.
+- Historique des messages disponible pour chaque utilisateur.
+  
+### Gestion des offres
+
+- Les entreprises partenaires et les hôpitaux peuvent publier des offres d'emploi, et les utilisateurs peuvent y postuler directement depuis l'application.
+  
+### Actualités et publications
+
+- Chaque utilisateur peut publier des annonces, des actualités ou des informations importantes dans un fil d’actualité.
+- Les publications peuvent être "likées" et commentées par les autres membres.
+
+## Contributions
+
+Nous accueillons volontiers les contributions de la communauté ! Pour contribuer :
+
+1. **Forker** ce dépôt.
+2. Créez votre branche de fonctionnalité :
+   ```bash
+   git checkout -b ma-nouvelle-fonctionnalité
+   ```
+3. **Committez** vos changements :
+   ```bash
+   git commit -m 'Ajouter une nouvelle fonctionnalité'
+   ```
+4. **Poussez** vos modifications :
+   ```bash
+   git push origin ma-nouvelle-fonctionnalité
