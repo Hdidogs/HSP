@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gestionnaires', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('ref_user')->constrained('users');
+            $table->unsignedBigInteger('ref_user')->primary();
+
+            $table->foreign('ref_user')->references('id')->on('users');
             $table->timestamps();
         });
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('titre');
             $table->text('description');
-            $table->text('missionlibe');
+            $table->text('mission');
             $table->float('salaire')->nullable();
             $table->foreignId('ref_user')->constrained('users');
             $table->timestamps();
