@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 use App\Http\Controllers\ForumController;
+=======
+use App\Http\Controllers\AccueilController;
+>>>>>>> f209aff26d9b4fd828e5cb27e5f004bfeb09f4d9
 use App\Http\Controllers\HopitalController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActiviteController;
@@ -35,7 +39,5 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [AccueilController::class, 'index'])->name('dashboard');
 });

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('titre');
             $table->text('description');
+            $table->dateTime('date');
             $table->string('adresse');
             $table->text('elementrequis')->nullable();
             $table->integer('nb_place');
