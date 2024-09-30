@@ -9,11 +9,25 @@
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
-
+                
+                <!-- Navigation Links -->
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Accueil') }}
+                    </x-nav-link>
+
+                    <!-- Liens supplémentaires : Offres d'emploi, Activité, Chat -->
+                    <x-nav-link href="{{ route('joboffers.index') }}" :active="request()->routeIs('joboffers.index')">
+                        {{ __('Offres d\'emploi') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="{{ route('activity.index') }}" :active="request()->routeIs('activity.index')">
+                        {{ __('Activité') }}
+                    </x-nav-link>
+
+                    <x-nav-link href="{{ route('chat.index') }}" :active="request()->routeIs('chat.index')">
+                        {{ __('Chat') }}
                     </x-nav-link>
                 </div>
             </div>
