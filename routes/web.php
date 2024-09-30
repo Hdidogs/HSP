@@ -8,13 +8,20 @@ use App\Http\Controllers\EtablissementController;
 use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\OffreController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\JobOfferController;
+use App\Http\Controllers\ChatController;
 
 Route::resource('offre', OffreController::class);
 Route::resource('evenement', EvenementController::class);
 Route::resource('entreprise', EntrepriseController::class);
 Route::resource('etablissement', EtablissementController::class);
 Route::resource('activite', ActiviteController::class);
+Route::get('joboffers', [JobOfferController::class, 'index'])->name('joboffers.index');
+Route::get('activity', [NewsController::class, 'index'])->name('activity.index');
+Route::get('chat', [ChatController::class, 'index'])->name('chat.index');
 
+// Route vers les offres d'emploi
 
 Route::get('/', function () {
     return view('welcome');
