@@ -10,7 +10,7 @@ class OffreController extends Controller
 {
     public function index()
     {
-        $offres = Offre::all();
+        $offres = Offre::latest()->get();
         return view('offre.index', compact('offres'));
     }
 
@@ -21,20 +21,16 @@ class OffreController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'titre' => 'required|string|max:191',
-            'description' => 'required|string',
-            'mission' => 'required|string',
+        $validatedData = $request->validate([
+            'titre' => 'required|max:255',
+            'description' => 'required',
+            'mission' => 'required',
             'salaire' => 'nullable|numeric',
         ]);
 
-        Offre::create([
-            'titre' => $request->titre,
-            'description' => $request->description,
-            'mission' => $request->mission,
-            'salaire' => $request->salaire,
-            'ref_user' => Auth::id(),
-        ]);
+        $validatedData['ref_user'] = Auth::id();
+
+        Offre::create($validatedData);
 
         return redirect()->route('offre.index');
     }
@@ -51,14 +47,14 @@ class OffreController extends Controller
 
     public function update(Request $request, Offre $offre)
     {
-        $request->validate([
-            'titre' => 'required|string|max:191',
-            'description' => 'required|string',
-            'mission' => 'required|string',
+        $validatedData = $request->validate([
+            'titre' => 'required|max:255',
+            'description' => 'required',
+            'mission' => 'required',
             'salaire' => 'nullable|numeric',
         ]);
 
-        $offre->update($request->all());
+        $offre->update($validatedData);
 
         return redirect()->route('offre.index');
     }
@@ -66,6 +62,7 @@ class OffreController extends Controller
     public function destroy(Offre $offre)
     {
         $offre->delete();
+
         return redirect()->route('offre.index');
     }
 }

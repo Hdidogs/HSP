@@ -20,9 +20,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
-
 Route::resource('specialite', SpecialiteController::class);
 Route::resource('gestionnaire', GestionnaireController::class);
 Route::resource('ticket', TicketController::class);
