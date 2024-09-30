@@ -1,31 +1,26 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Modifier une offre') }}
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <form action="{{ route('offre.update', $offre) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="mb-4">
-                            <label for="titre" class="block text-gray-700 text-sm font-bold mb-2">Titre</label>
-                            <input type="text" name="titre" id="titre" value="{{ $offre->titre }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-                        <div class="mb-4">
-                            <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
-                            <textarea name="description" id="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $offre->description }}</textarea>
-                        </div>
-                        <div class="mb-4">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Modifier</button>
-                        </div>
-                    </form>
-                </div>
+    <div class="container mx-auto mt-4">
+        <h1 class="text-2xl font-bold">Modifier l'Offre</h1>
+        <form action="{{ route('offre.update', $offre) }}" method="POST" class="mt-4">
+            @csrf
+            @method('PUT')
+            <div class="mb-4">
+                <label for="titre" class="block text-sm font-medium">Titre</label>
+                <input type="text" name="titre" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="{{ $offre->titre }}" required>
             </div>
-        </div>
+            <div class="mb-4">
+                <label for="description" class="block text-sm font-medium">Description</label>
+                <textarea name="description" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>{{ $offre->description }}</textarea>
+            </div>
+            <div class="mb-4">
+                <label for="mission" class="block text-sm font-medium">Mission</label>
+                <textarea name="mission" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>{{ $offre->mission }}</textarea>
+            </div>
+            <div class="mb-4">
+                <label for="salaire" class="block text-sm font-medium">Salaire</label>
+                <input type="number" name="salaire" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="{{ $offre->salaire }}" step="0.01">
+            </div>
+            <button type="submit" class="btn btn-success">Mettre à jour</button>
+        </form>
     </div>
 </x-app-layout>

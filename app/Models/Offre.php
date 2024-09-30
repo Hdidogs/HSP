@@ -12,8 +12,12 @@ class Offre extends Model
     protected $fillable = [
         'titre',
         'description',
-        'missionlibre',
+        'mission',
         'salaire',
         'ref_user'
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'ref_user');
+    }
 }

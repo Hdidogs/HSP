@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Offre;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OffreController extends Controller
 {
@@ -21,19 +22,21 @@ class OffreController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'titre' => 'required',
-            'description' => 'required',
-            'missionlibre' => 'required',
-            'salaire' => 'required'
+            'titre' => 'required|string|max:191',
+            'description' => 'required|string',
+            'mission' => 'required|string',
+            'salaire' => 'nullable|numeric',
         ]);
 
-        $data = $request->all();
-        $data['ref_user'] = auth()->id(); // Définir automatiquement l'ID de l'utilisateur authentifié
+        Offre::create([
+            'titre' => $request->titre,
+            'description' => $request->description,
+            'mission' => $request->mission,
+            'salaire' => $request->salaire,
+            'ref_user' => Auth::id(),
+        ]);
 
-        Offre::create($data);
-
-        return redirect()->route('offre.index')
-            ->with('success', 'Offre créée avec succès.');
+        return redirect()->route('offre.index');
     }
 
     public function show(Offre $offre)
@@ -49,24 +52,20 @@ class OffreController extends Controller
     public function update(Request $request, Offre $offre)
     {
         $request->validate([
-            'titre' => 'required',
-            'description' => 'required',
-            'missionlibre' => 'required',
-            'salaire' => 'required',
-            'ref_user' => 'required'
+            'titre' => 'required|string|max:191',
+            'description' => 'required|string',
+            'mission' => 'required|string',
+            'salaire' => 'nullable|numeric',
         ]);
 
         $offre->update($request->all());
 
-        return redirect()->route('offre.index')
-            ->with('success', 'Offre modifiée avec succès.');
+        return redirect()->route('offre.index');
     }
 
     public function destroy(Offre $offre)
     {
         $offre->delete();
-
-        return redirect()->route('offre.index')
-            ->with('success', 'Offre supprimée avec succès.');
+        return redirect()->route('offre.index');
     }
 }

@@ -20,7 +20,7 @@ class EntrepriseController extends Controller{
         $validated = $request->validate([
             'nom' => 'required|string|max:255',
             'adresseweb' => 'required|string|max:255',
-            'numero' => 'required|string|max:255',
+            'numero' => 'required|number|max:10',
         ]);
 
         Entreprise::create($validated);
