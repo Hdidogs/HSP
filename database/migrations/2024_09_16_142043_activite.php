@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('titre');
             $table->text('desc');
+            $table->dateTime('date');
             $table->integer('nb_place');
             $table->foreignId('ref_user')->constrained('users');
             $table->timestamps();
