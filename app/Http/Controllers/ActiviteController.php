@@ -20,7 +20,7 @@ class ActiviteController extends Controller
     public function create()
     {
         $users = User::all();
-        return view('activite.create',compact('users'));
+        return view('activite.create', compact('users'));
     }
 
     // Stocker une nouvelle activité
@@ -30,6 +30,7 @@ class ActiviteController extends Controller
         $validatedData = $request->validate([
             'titre' => 'required|string|max:255',
             'desc' => 'nullable|string',
+            'date' => 'required|date_format:Y-m-d\TH:i',
             'nb_place' => 'required|integer|min:1',
         ]);
 
@@ -37,6 +38,7 @@ class ActiviteController extends Controller
         $activite = new Activite();
         $activite->titre = $validatedData['titre'];
         $activite->desc = $validatedData['desc'];
+        $activite->date = $validatedData['date'];
         $activite->nb_place = $validatedData['nb_place'];
 
         // Lier l'utilisateur connecté comme créateur
@@ -66,6 +68,7 @@ class ActiviteController extends Controller
         $request->validate([
             'titre' => 'required',
             'desc' => 'required',
+            'date' => 'required|date_format:Y-m-d\TH:i',
             'nb_place' => 'required|integer',
             'ref_user' => 'required|integer',
         ]);
