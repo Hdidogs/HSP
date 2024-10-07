@@ -3,7 +3,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="px-4 py-5 bg-white sm:p-6 shadow sm:rounded-tl-md sm:rounded-tr-md">
                 <div class="max-w-xl">
-                    @include('hopital.create-hopital')
+                    @livewire('hopital.create-hopital')
                 </div>
             </div>
         </div>
