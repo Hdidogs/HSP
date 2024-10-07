@@ -27,14 +27,18 @@ Route::resource('hopitaux', HopitalController::class);
 Route::resource('post', PostController::class);
 Route::resource('forum', ForumController::class);
 Route::resource('offre', OffreController::class);
-Route::resource('evenement', EvenementController::class);
+//Route::resource('evenement', EvenementController::class); // PAS TOUCHER
 Route::resource('entreprise', EntrepriseController::class);
 Route::resource('etablissement', EtablissementController::class);
 Route::resource('activite', ActiviteController::class);
 Route::get('joboffers', [OffreController::class, 'index'])->name('joboffers.index');
 Route::get('activity', [ActiviteController::class, 'index'])->name('activity.index');
 Route::get('chat', [ForumController::class, 'index'])->name('chat.index');
+Route::get('evenement', [EvenementController::class, 'index'])->name('evenement.index');
+Route::get('evenement/create', [EvenementController::class, 'create'])->name('evenement.create');
+Route::get('evenement/store', [EvenementController::class, 'store'])->name('evenement.store');
 
+    
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

@@ -25,7 +25,9 @@
                     <x-nav-link href="{{ route('activity.index') }}" :active="request()->routeIs('activity.index')">
                         {{ __('Activité') }}
                     </x-nav-link>
-
+                    <x-nav-link href="{{ route('evenement.index') }}" :active="request()->routeIs('evenement.index')">
+                        {{ __('Événements') }}
+                    </x-nav-link>
                     <x-nav-link href="{{ route('chat.index') }}" :active="request()->routeIs('chat.index')">
                         {{ __('Chat') }}
                     </x-nav-link>
