@@ -21,11 +21,12 @@ class EvenementController extends Controller
         $request->validate([
             'type' => 'required',
             'titre' => 'required',
+            'date' => 'required|date_format:Y-m-d\TH:i',
             'description' => 'required',
             'adresse' => 'required',
             'elementrequis' => 'required|',
             'nb_place' => 'required|integer',
-            ]);
+        ]);
         Evenement::create($request->all());
         return redirect()->route('evenement.index');
     }
@@ -38,11 +39,12 @@ class EvenementController extends Controller
         $request->validate([
             'type' => 'required',
             'titre' => 'required',
+            'date' => 'required|date_format:Y-m-d\TH:i',
             'description' => 'required',
             'adresse' => 'required',
             'elementrequis' => 'required|',
             'nb_place' => 'required|integer',
-            ]);
+        ]);
         $evenement->update($request->all());
         return redirect()->route('evenement.index');
     }

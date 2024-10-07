@@ -20,40 +20,44 @@
                         Liste des événements
                     </div>
                     <div class="mt-6">
-                        <a href="{{ route('evenement.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ajouter un événement</a>
+                        <a href="{{ route('evenement.create') }}"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ajouter un
+                            événement</a>
                     </div>
 
                     <table class="min-w-full mt-4">
                         <thead>
-                        <tr>
-                            <th class="border px-4 py-2">Type</th>
-                            <th class="border px-4 py-2">Titre</th>
-                            <th class="border px-4 py-2">Description</th>
-                            <th class="border px-4 py-2">Adresse</th>
-                            <th class="border px-4 py-2">Élément requis</th>
-                            <th class="border px-4 py-2">Nombre de places</th>
-                            <th class="border px-4 py-2">Actions</th>
-                        </tr>
+                            <tr>
+                                <th class="border px-4 py-2">Type</th>
+                                <th class="border px-4 py-2">Titre</th>
+                                <th class="border px-4 py-2">Description</th>
+                                <th class="border px-4 py-2">Adresse</th>
+                                <th class="border px-4 py-2">Élément requis</th>
+                                <th class="border px-4 py-2">Nombre de places</th>
+                                <th class="border px-4 py-2">Actions</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach ($evenements as $evenement)
-                            <tr>
-                                <td class="border px-4 py-2">{{ $evenement->type }}</td>
-                                <td class="border px-4 py-2">{{ $evenement->titre }}</td>
-                                <td class="border px-4 py-2">{{ $evenement->description }}</td>
-                                <td class="border px-4 py-2">{{ $evenement->adresse }}</td>
-                                <td class="border px-4 py-2">{{ $evenement->elementrequis }}</td>
-                                <td class="border px-4 py-2">{{ $evenement->nb_place }}</td>
-                                <td class="border px-4 py-2">
-                                    <a href="{{ route('evenement.edit', $evenement) }}" class="text-blue-500">Modifier</a>
-                                    <form action="{{ route('evenement.destroy', $evenement) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-500">Supprimer</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach ($evenements as $evenement)
+                                <tr>
+                                    <td class="border px-4 py-2">{{ $evenement->type }}</td>
+                                    <td class="border px-4 py-2">{{ $evenement->titre }}</td>
+                                    <td class="border px-4 py-2">{{ $evenement->description }}</td>
+                                    <td class="border px-4 py-2">{{ $evenement->adresse }}</td>
+                                    <td class="border px-4 py-2">{{ $evenement->elementrequis }}</td>
+                                    <td class="border px-4 py-2">{{ $evenement->nb_place }}</td>
+                                    <td class="border px-4 py-2">
+                                        <a href="{{ route('evenement.edit', $evenement) }}"
+                                            class="text-blue-500">Modifier</a>
+                                        <form action="{{ route('evenement.destroy', $evenement) }}" method="POST"
+                                            style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-500">Supprimer</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
