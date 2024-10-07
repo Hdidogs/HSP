@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('titre');
             $table->text('description');
             $table->text('mission');
+            $table->boolean('closed')->default(false);
             $table->float('salaire')->nullable();
             $table->foreignId('ref_user')->constrained('users');
             $table->timestamps();
