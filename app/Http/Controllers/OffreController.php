@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CandidatureMail;
 use App\Models\Offre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-
 class OffreController extends Controller
 {
     public function index()
@@ -78,7 +78,6 @@ class OffreController extends Controller
     public function postuler(Request $request, Offre $offre)
     {
         $request->validate([
-            'cv' => 'required|file|mimes:pdf,doc,docx|max:2048',
             'message' => 'nullable|string|max:3000',
         ]);
 
@@ -86,11 +85,14 @@ class OffreController extends Controller
         $user = Auth::user();
         $mailCreateur = $offre->ref_user->email;
 
-        Mail::send([], [],function ($mail) use ($user , $mailCreateur , $contenue , $offre) {
-            $mail->to($mailCreateur)
-                ->subject('Candidature pour votre offre' . $offre->titre)
-                ->setBody("Bonjour {$contenue->name}, \n\n {$user->name} a postuler pour votre offre \" {$offre->titre}\".\n\n Voici son message : \n\n {$contenue} \n\n Cordialement, \n\n {$user->name}");
-        });
-    return redirect()->route('offre.show', $offre);
+        Mail::to($mailCreateur)->send(new CandidatureMail($user, $contenue, $offre));
+
+        return redirect()->route('offre.show', $offre);
     }
+
+    public function showPostulerForm(Offre $offre)
+    {
+        return view('offre.postuler', compact('offre'));
+    }
+
 }

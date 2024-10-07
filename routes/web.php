@@ -20,7 +20,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
+Route::get('/offres/{offre}/postuler', [OffreController::class, 'showPostulerForm'])->name('offre.postuler');
+Route::post('/offres/{offre}/postuler', [OffreController::class, 'postuler'])->name('offre.postuler.submit');
 Route::put('/offres/{offre}/cloturer', [OffreController::class, 'cloturer'])->name('offre.cloturer');
 Route::resource('specialite', SpecialiteController::class);
 Route::resource('gestionnaire', GestionnaireController::class);
@@ -40,7 +41,7 @@ Route::get('evenement', [EvenementController::class, 'index'])->name('evenement.
 Route::get('evenement/create', [EvenementController::class, 'create'])->name('evenement.create');
 Route::get('evenement/store', [EvenementController::class, 'store'])->name('evenement.store');
 
-    
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

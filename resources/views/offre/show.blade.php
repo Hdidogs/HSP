@@ -17,7 +17,7 @@
                 @if($offre->salaire)
                     <p class="text-gray-600 mb-2">Salaire : {{ number_format($offre->salaire, 2) }} €</p>
                 @endif
-                <form action="{{ route('offre.postuler', $offre) }}" method="POST">
+                <form action="{{ route('offre.postuler', $offre) }}" method="GET">
                     @csrf
                     <button type="submit" class="mt-4 inline-block bg-green-500 hover:bg-green-500 text-white font-bold py-2 px-4 rounded">
                         Postuler
