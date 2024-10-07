@@ -20,6 +20,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::put('/offres/{offre}/cloturer', [OffreController::class, 'cloturer'])->name('offre.cloturer');
 Route::resource('specialite', SpecialiteController::class);
 Route::resource('gestionnaire', GestionnaireController::class);
 Route::resource('ticket', TicketController::class);

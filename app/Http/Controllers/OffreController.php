@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Offre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OffreController extends Controller
 {
@@ -63,6 +64,33 @@ class OffreController extends Controller
     {
         $offre->delete();
 
-        return redirect()->route('offre.index');
+        return redirect()->route('offre .index');
+    }
+
+    public function cloturer(Request $request, Offre $offre)
+    {
+        $offre->closed = $request->input('closed',0);
+        $offre->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function postuler(Request $request, Offre $offre)
+    {
+        $request->validate([
+            'cv' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'message' => 'nullable|string|max:3000',
+        ]);
+
+        $contenue = $request->input('message');
+        $user = Auth::user();
+        $mailCreateur = $offre->ref_user->email;
+
+        Mail::send([], [],function ($mail) use ($user , $mailCreateur , $contenue , $offre) {
+            $mail->to($mailCreateur)
+                ->subject('Candidature pour votre offre' . $offre->titre)
+                ->setBody("Bonjour {$contenue->name}, \n\n {$user->name} a postuler pour votre offre \" {$offre->titre}\".\n\n Voici son message : \n\n {$contenue} \n\n Cordialement, \n\n {$user->name}");
+        });
+    return redirect()->route('offre.show', $offre);
     }
 }

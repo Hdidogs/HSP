@@ -17,16 +17,12 @@
                 @if($offre->salaire)
                     <p class="text-gray-600 mb-2">Salaire : {{ number_format($offre->salaire, 2) }} €</p>
                 @endif
-
-                <div class="mt-4">
-                    <a href="{{ route('offre.edit', $offre) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">Modifier</a>
-                    <form action="{{ route('offre.destroy', $offre) }}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette offre ?')">Supprimer</button>
-                    </form>
-                </div>
-
+                <form action="{{ route('offre.postuler', $offre) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="mt-4 inline-block bg-green-500 hover:bg-green-500 text-white font-bold py-2 px-4 rounded">
+                        Postuler
+                    </button>
+                </form>
                 <a href="{{ route('offre.index') }}" class="mt-4 inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Retour aux offres</a>
             </div>
         </div>
