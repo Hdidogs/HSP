@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\CandidatureMail;
 use App\Models\Offre;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -83,7 +84,13 @@ class OffreController extends Controller
 
         $contenue = $request->input('message');
         $user = Auth::user();
-        $mailCreateur = $offre->ref_user->email;
+
+        $userCreateur = User::find($offre->ref_user);
+        if (!$userCreateur) {
+            return redirect()->back()->withErrors('Impossible de trouver le créateur de l\'offre');
+        }
+
+        $mailCreateur = $userCreateur->email;
 
         Mail::to($mailCreateur)->send(new CandidatureMail($user, $contenue, $offre));
 
