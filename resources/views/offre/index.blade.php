@@ -10,7 +10,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach($offres as $offre)
-                        @if($offre->closed != 1 || Auth::user()->id == $offre->ref_user)
+                        @if($offre->closed != 1 && Auth::user()->id == $offre->ref_user || DB::table('partenaires')->where("ref_user", $offre->ref_user)->value('ref_entreprise') == DB::table('partenaires')->where("ref_user", Auth::user()->id)->value('ref_entreprise'))
                         <div class="bg-white shadow-md rounded-lg p-6 py-10 px-10">
                             <h2 class="text-xl font-semibold mb-2">{{ $offre->titre }}</h2>
                             <p class="text-gray-600 mb-4">{{ Str::limit($offre->description, 100) }}</p>
@@ -40,7 +40,7 @@
                         </div>
                         @endif
                     @endforeach
-                    @if($offres->isEmpty() || $offres->where('closed', 1)->count() == $offres->count() && $offres->where("ref_user",Auth::user()->id)->count() < 1)
+                    @if($offres->isEmpty() || $offres->where('closed', 1)->count() == $offres->count() || $offres->where("ref_user",Auth::user()->id)->count() < 1 || DB::table('partenaires')->where("ref_user", $offre->ref_user)->value('ref_entreprise') == DB::table('partenaires')->where("ref_user", Auth::user()->id)->value('ref_entreprise'))
                     <check>
                         <div class="bg-white shadow-md rounded-lg p-6 py-10 px-10">
                             <p class="text-gray-600 mb-4">Aucune offre d'emploi pour le moment.</p>
