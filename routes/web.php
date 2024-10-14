@@ -39,7 +39,13 @@ Route::get('activity', [ActiviteController::class, 'index'])->name('activity.ind
 Route::get('chat', [ForumController::class, 'index'])->name('chat.index');
 Route::get('evenement', [EvenementController::class, 'index'])->name('evenement.index');
 Route::get('evenement/create', [EvenementController::class, 'create'])->name('evenement.create');
-Route::get('evenement/store', [EvenementController::class, 'store'])->name('evenement.store');
+Route::post('evenement/store', [EvenementController::class, 'store'])->name('evenement.store');
+Route::get('evenement/{evenement}/edit', [EvenementController::class, 'edit'])->name('evenement.edit');
+Route::put('evenement/{evenement}', [EvenementController::class, 'update'])->name('evenement.update');
+Route::delete('evenement/{evenement}', [EvenementController::class, 'destroy'])->name('evenement.destroy');
+Route::post('/evenement/{evenement}/inscription', [EvenementController::class, 'inscription'])->name('evenement.inscription');
+Route::post('/evenement/{evenement}/inscription', [EvenementController::class, 'inscription'])->name('evenement.inscription');
+Route::delete('/evenement/{evenement}/desinscription', [EvenementController::class, 'desinscription'])->name('evenement.desinscription');
 
 
 Route::middleware([

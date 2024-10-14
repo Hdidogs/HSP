@@ -1,78 +1,81 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Créer une nouvelle activité') }}
+            {{ __('Créer un événement') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                <form action="{{ route('activite.store') }}" method="POST">
-                    @csrf
-                    <div class="mb-4">
-                        <label for="type" class="sr-only">Type</label>
-                        <input type="text" name="type" id="type" placeholder="Type"
-                            class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('type') border-red-500 @enderror"
-                            value="{{ old('type') }}">
-                        @error('type')
-                            <div class="text-red-500 mt-2 text-sm">
-                                {{ $message }}
-                            </div>
-                        @enderror
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+                    <div class="text-2xl mb-6">
+                        Créer un nouvel événement
                     </div>
-                    <div class="mb-4">
-                        <label for="titre" class="sr-only">Titre</label>
-                        <input type="text" name="titre" id="titre" placeholder="Titre"
-                            class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('titre') border-red-500 @enderror"
-                            value="{{ old('titre') }}">
-                        @error('titre')
-                            <div class="text-red-500 mt-2 text-sm">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="mb-4">
-                        <label for="desc" class="sr-only">Description</label>
-                        <textarea name="desc" id="desc" placeholder="Description"
-                            class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('desc') border-red-500 @enderror"
-                            rows="4">{{ old('desc') }}</textarea>
-                        @error('desc')
-                            <div class="text-red-500 mt-2 text-sm">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="mb-4">
-                        <label for="nb_place" class="sr-only">Nombre de places</label>
-                        <input type="number" name="nb_place" id="nb_place" placeholder="Nombre de places"
-                            class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('nb_place') border-red-500 @enderror"
-                            value="{{ old('nb_place') }}" min="1">
-                        @error('nb_place')
-                            <div class="text-red-500 mt-2 text-sm">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="mb-4">
-                        <label for="date" class="sr-only">Date et Heure</label>
-                        <input type="datetime-local" name="date" id="date" placeholder="Date et Heure"
-                            class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('date') border-red-500 @enderror"
-                            value="{{ old('date') }}">
-                        @error('date')
-                            <div class="text-red-500 mt-2 text-sm">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="submit">
-                            Créer l'activité
-                        </button>
-                    </div>
-                </form>
+
+                    <form action="{{ route('evenement.store') }}" method="POST" class="max-w-lg mx-auto">
+                        @csrf
+
+                        <div class="mb-4">
+                            <label for="type" class="block text-gray-700 text-sm font-bold mb-2">Type</label>
+                            <input type="text" name="type" id="type"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="titre" class="block text-gray-700 text-sm font-bold mb-2">Titre</label>
+                            <input type="text" name="titre" id="titre"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="description"
+                                class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                            <textarea name="description" id="description"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="adresse" class="block text-gray-700 text-sm font-bold mb-2">Adresse</label>
+                            <input type="text" name="adresse" id="adresse"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="elementrequis" class="block text-gray-700 text-sm font-bold mb-2">Élément
+                                requis</label>
+                            <input type="text" name="elementrequis" id="elementrequis"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="nb_place" class="block text-gray-700 text-sm font-bold mb-2">Nombre de
+                                places</label>
+                            <input type="number" name="nb_place" id="nb_place"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Date et heure</label>
+                            <input type="datetime-local" name="date" id="date"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                required>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                Créer l'événement
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
