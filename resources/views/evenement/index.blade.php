@@ -40,7 +40,8 @@
                                     <h4 class="text-lg font-bold text-gray-900 mb-2 text-2xl">{{ $evenement->titre }}</h4>
                                     <p class="text-sm text-gray-500 mb-4 text-lg">{{ $evenement->type }}</p>
                                     <p class="text-sm text-gray-600 mb-4 text-lg">
-                                        {{ Str::limit($evenement->description, 100) }}</p>
+                                        {{ Str::limit($evenement->description, 100) }}
+                                    </p>
                                     <div class="flex items-center text-sm text-gray-500 mb-2 text-lg">
                                         <svg class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -118,19 +119,76 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function confirmInscription(evenementId) {
-            if (confirm('Voulez-vous vous inscrire à cet événement ?')) {
-                document.getElementById('inscription-form-' + evenementId).submit();
-            }
+            Swal.fire({
+                title: 'Êtes-vous sûr ?',
+                text: "Voulez-vous vous inscrire à cet événement ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Oui, inscrire !',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    showLoadingAnimation();
+                    document.getElementById('inscription-form-' + evenementId).submit();
+                }
+            });
         }
 
         function confirmDesinscription(evenementId) {
-            if (confirm('Voulez-vous vous désinscrire de cet événement ?')) {
-                document.getElementById('desinscription-form-' + evenementId).submit();
-            }
+            Swal.fire({
+                title: 'Êtes-vous sûr ?',
+                text: "Voulez-vous vous désinscrire de cet événement ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Oui, désinscrire !',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    showLoadingAnimation();
+                    document.getElementById('desinscription-form-' + evenementId).submit();
+                }
+            });
+        }
+
+        function showLoadingAnimation() {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'loading-animation';
+            loadingDiv.style.position = 'fixed';
+            loadingDiv.style.top = '50%';
+            loadingDiv.style.left = '50%';
+            loadingDiv.style.transform = 'translate(-50%, -50%)';
+            loadingDiv.style.zIndex = '9999';
+            loadingDiv.innerHTML = `
+                <div class="flex items-center justify-center space-x-2">
+                    <div class="w-8 h-8 border-4 border-blue-500 border-dotted rounded-full animate-spin"></div>
+                    <div class="text-lg font-semibold">Chargement...</div>
+                </div>
+            `;
+            document.body.appendChild(loadingDiv);
         }
     </script>
+    <style>
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+    </style>
 
     @foreach($evenements as $evenement)
         <form id="inscription-form-{{ $evenement->id }}" action="{{ route('evenement.inscription', $evenement) }}"
