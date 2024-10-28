@@ -12,10 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('inscriptions', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('ref_user')->constrained('users');
-            $table->foreignId('ref_evenement')->constrained('evenements');
+            $table->bigInteger('ref_user');
+            $table->bigInteger('ref_evenement');
+
             $table->timestamps();
+
+            $table->foreign('ref_user')->references('id')->on('users');
+            $table->foreign('ref_evenement')->references('id')->on('evenements');
+
+            $table->primary(['ref_user', 'ref_evenement']);
         });
 
     }

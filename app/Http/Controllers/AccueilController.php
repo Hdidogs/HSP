@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activite;
-use App\Models\Evenement;
-use App\Models\Offre;
+use App\Models\ActiviteAvant;
+use App\Models\EvenementAvant;
+use App\Models\OffreAvant;
 
 class AccueilController
 {
     public function index()
     {
-        $evenements = Evenement::all();
-        $activites = Activite::all();
-        $offres = Offre::all();
+        $events = EvenementAvant::all();
+        $news = ActiviteAvant::all();
+        $offers = OffreAvant::all();
 
-        return view('dashboard', compact('offres', 'activites', 'evenements'));
+        return view('dashboard', compact('offers', 'news', 'events'));
     }
 }
