@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ActiviteAvant extends Controller
+class OffreAvantController extends Controller
 {
     //
 }

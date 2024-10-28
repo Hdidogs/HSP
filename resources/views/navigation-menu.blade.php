@@ -3,8 +3,11 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-mark class="block h-9 w-auto" />
+                    <a href="{{ route('dashboard') }}" class="flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        <span class="sr-only">Accueil</span>
                     </a>
                 </div>
 
@@ -143,7 +146,22 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Accueil') }}
+            </x-responsive-nav-link>
+            @if(Auth::user()->ref_role == 3 || Auth::user()->ref_role == 4 )
+                <x-responsive-nav-link href="{{ route('joboffers.index') }}" :active="request()->routeIs('joboffers.index')">
+                    {{ __('Offres d\'emploi') }}
+                </x-responsive-nav-link>
+            @endif
+
+            <x-responsive-nav-link href="{{ route('activity.index') }}" :active="request()->routeIs('activity.index')">
+                {{ __('Activité') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('evenement.index') }}" :active="request()->routeIs('evenement.index')">
+                {{ __('Événements') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('chat.index') }}" :active="request()->routeIs('chat.index')">
+                {{ __('Chat') }}
             </x-responsive-nav-link>
         </div>
 

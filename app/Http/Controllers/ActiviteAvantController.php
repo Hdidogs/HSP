@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class EvenementAvant extends Controller
+class ActiviteAvantController extends Controller
 {
     //
 }

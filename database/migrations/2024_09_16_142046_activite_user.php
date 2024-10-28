@@ -12,10 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('activite_user', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('ref_user')->constrained('users');
-            $table->foreignId('ref_activite')->constrained('activites');
+            $table->bigInteger('ref_user');
+            $table->bigInteger('ref_activite');
+
             $table->timestamps();
+
+            $table->foreign('ref_user')->references('id')->on('users');
+            $table->foreign('ref_activite')->references('id')->on('activites');
+
+            $table->primary(['ref_user', 'ref_activite']);
         });
 
     }
