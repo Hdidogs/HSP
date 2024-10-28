@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('forums', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
+            $table->foreignId('ref_user')->constrained('users');
             $table->timestamps();
         });
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('forums');
     }
 };

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('etudiants', function (Blueprint $table) {
-            $table->unsignedBigInteger('ref_user')->primary();
+            $table->unsignedBigInteger('ref_user')->primary(); // Ensure this matches the data type of 'id' in 'users' table
             $table->text('cv');
             $table->text('etude');
             $table->foreignId('ref_etablissement')->constrained('etablissements');
@@ -20,7 +20,6 @@ return new class extends Migration
 
             $table->foreign('ref_user')->references('id')->on('users');
         });
-
     }
 
     /**
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('etudiants');
     }
 };
