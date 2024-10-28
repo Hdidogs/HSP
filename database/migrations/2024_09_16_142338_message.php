@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->text('libelle');
+            $table->integer('upvote');
+            $table->integer('downvote');
             $table->foreignId('ref_user')->constrained('users');
             $table->foreignId('ref_post')->constrained('posts');
             $table->timestamps();

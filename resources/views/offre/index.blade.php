@@ -40,7 +40,7 @@
                         </div>
                         @endif
                     @endforeach
-                    @if($offres->isEmpty() || $offres->where('closed', 1)->count() == $offres->count() || $offres->where("ref_user",Auth::user()->id)->count() < 1 || DB::table('partenaires')->where("ref_user", $offre->ref_user)->value('ref_entreprise') == DB::table('partenaires')->where("ref_user", Auth::user()->id)->value('ref_entreprise'))
+                    @if($offres->isEmpty() || $offres->where('closed', 1)->count() == $offres->count() || $offres->where("ref_user",Auth::user()->id)->count() < 1)
                     <check>
                         <div class="bg-white shadow-md rounded-lg p-6 py-10 px-10">
                             <p class="text-gray-600 mb-4">Aucune offre d'emploi pour le moment.</p>

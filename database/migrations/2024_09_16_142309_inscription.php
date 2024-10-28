@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('inscriptions', function (Blueprint $table) {
-            $table->bigInteger('ref_user');
-            $table->bigInteger('ref_evenement');
-
+            $table->unsignedBigInteger('ref_user'); // Ensure this matches the data type of 'id' in 'users' table
+            $table->unsignedBigInteger('ref_evenement'); // Ensure this matches the data type of 'id' in 'evenements' table
             $table->timestamps();
 
             $table->foreign('ref_user')->references('id')->on('users');
@@ -22,7 +21,6 @@ return new class extends Migration
 
             $table->primary(['ref_user', 'ref_evenement']);
         });
-
     }
 
     /**
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('inscriptions');
     }
 };
