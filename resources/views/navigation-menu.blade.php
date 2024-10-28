@@ -25,7 +25,7 @@
                         {{ __('Événements') }}
                     </x-nav-link>
                     <x-nav-link href="{{ route('chat.index') }}" :active="request()->routeIs('chat.index')">
-                        {{ __('Chat') }}
+                        {{ __('Forums') }}
                     </x-nav-link>
                 </div>
             </div>

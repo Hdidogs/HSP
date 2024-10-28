@@ -14,6 +14,14 @@ class ForumController extends Controller
         return view('forum.index', compact('forums'));
     }
 
+    public function show(Forum $forum)
+    {
+        // Charger les relations nécessaires, par exemple les messages du forum
+        $forum->load('messages');
+
+        return view('forum.show', compact('forum'));
+    }
+
     public function create()
     {
         return view('forum.create');
