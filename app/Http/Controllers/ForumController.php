@@ -5,20 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Forum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ForumController extends Controller
 {
     public function index()
     {
-        $forums = Forum::all();
+        $forums = DB::table('forums')
+            ->select('forums.*', 'users.nom as creator_name')
+            ->leftJoin('users', 'forums.ref_user', '=', 'users.id')
+            ->latest('forums.created_at')
+            ->get();
+
         return view('forum.index', compact('forums'));
     }
 
     public function show(Forum $forum)
     {
-        // Charger les relations nécessaires, par exemple les messages du forum
-        $forum->load('messages');
-
+        $forum->load([
+            'posts' => function ($query) {
+                $query->latest()->with('user');
+            },
+            'user'
+        ]);
         return view('forum.show', compact('forum'));
     }
 
@@ -29,17 +38,18 @@ class ForumController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'nom' => 'required|string|max:191',
         ]);
 
-        Forum::create([
-            'nom' => $request->nom,
-            'user_id' => Auth::id(),
+        $forum = Forum::create([
+            'nom' => $validatedData['nom'],
+            'ref_user' => Auth::user()->id,
         ]);
 
-        return redirect()->route('forum.index');
+        return redirect()->route('forum.index')->with('success', 'Forum créé avec succès.');
     }
+
     public function edit(Forum $forum)
     {
         return view('forum.edit', compact('forum'));
@@ -47,20 +57,20 @@ class ForumController extends Controller
 
     public function update(Request $request, Forum $forum)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'nom' => 'required|string|max:191',
         ]);
 
         $forum->update([
-            'nom' => $request->nom,
+            'nom' => $validatedData['nom'],
         ]);
 
-        return redirect()->route('forum.index');
+        return redirect()->route('forum.index')->with('success', 'Forum mis à jour avec succès.');
     }
 
     public function destroy(Forum $forum)
     {
         $forum->delete();
-        return redirect()->route('forum.index');
+        return redirect()->route('forum.index')->with('success', 'Forum supprimé avec succès.');
     }
 }
