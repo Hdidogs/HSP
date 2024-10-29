@@ -13,6 +13,7 @@ use App\Http\Controllers\OffreController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\GestionnaireController;
 use App\Http\Controllers\SpecialiteController;
+use App\Http\Controllers\MessageController;
 
 // Route vers les offres d'emploi
 
@@ -46,7 +47,14 @@ Route::delete('evenement/{evenement}', [EvenementController::class, 'destroy'])-
 Route::post('/evenement/{evenement}/inscription', [EvenementController::class, 'inscription'])->name('evenement.inscription');
 Route::post('/evenement/{evenement}/inscription', [EvenementController::class, 'inscription'])->name('evenement.inscription');
 Route::delete('/evenement/{evenement}/desinscription', [EvenementController::class, 'desinscription'])->name('evenement.desinscription');
-
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('post.show');
+Route::resource('post', PostController::class)->except(['show']);
+#nouvell    
+Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+Route::put('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
+Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+Route::post('/messages/{message}/upvote', [MessageController::class, 'upvote'])->name('messages.upvote');
+Route::post('/messages/{message}/downvote', [MessageController::class, 'downvote'])->name('messages.downvote');
 
 Route::middleware([
     'auth:sanctum',
