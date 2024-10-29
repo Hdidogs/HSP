@@ -16,12 +16,14 @@
                 @if($offre->salaire)
                     <p class="text-gray-600 mb-2">Salaire : {{ number_format($offre->salaire, 2) }} €</p>
                 @endif
-                <form action="{{ route('offre.postuler', $offre) }}" method="GET">
-                    @csrf
-                    <button type="submit" class="mt-4 inline-block bg-green-500 hover:bg-green-500 text-white font-bold py-2 px-4 rounded">
-                        Postuler
-                    </button>
-                </form>
+                @if(Auth::id() !== $offre->ref_user && Auth::user()->ref_role == 2 && !$offre->hasApplied(Auth::user()))
+                    <form action="{{ route('offre.postuler', $offre) }}" method="GET">
+                        @csrf
+                        <button type="submit" class="mt-4 inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            Postuler
+                        </button>
+                    </form>
+                @endif
                 <a href="{{ route('offre.index') }}" class="mt-4 inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Retour aux offres</a>
             </div>
         </div>

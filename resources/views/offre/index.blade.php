@@ -10,53 +10,54 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach($offres as $offre)
-                        @if($offre->closed != 1 && Auth::user()->id == $offre->ref_user || DB::table('partenaires')->where("ref_user", $offre->ref_user)->value('ref_entreprise') == DB::table('partenaires')->where("ref_user", Auth::user()->id)->value('ref_entreprise'))
-                        <div class="bg-white shadow-md rounded-lg p-6 py-10 px-10">
-                            <h2 class="text-xl font-semibold mb-2">{{ $offre->titre }}</h2>
-                            <p class="text-gray-600 mb-4">{{ Str::limit($offre->description, 100) }}</p>
-                            <p class="text-gray-600 mb-2">Mission : {{ Str::limit($offre->mission, 100) }}</p>
-                            @if($offre->salaire)
-                                <p class="text-gray-600 mb-2">Salaire : {{ number_format($offre->salaire, 2) }} €</p>
-                            @endif
-                            @if(Auth::user()->id == $offre->ref_user)
-                                @if(Auth::user()->id == $offre->ref_user)
-                                    <input class="mb-2" type="checkbox" id="cloturerCheckbox-{{ $offre->id }}" data-offre-id="{{ $offre->id }}" {{ $offre->closed == 1 ? 'checked' : '' }}> Clôturer ?
+                        @if($offre->closed != 1 || Auth::user()->id == $offre->ref_user || DB::table('partenaires')->where("ref_user", $offre->ref_user)->value('ref_entreprise') == DB::table('partenaires')->where("ref_user", Auth::user()->id)->value('ref_entreprise'))
+                            <div class="bg-white shadow-md rounded-lg p-6 py-10 px-10">
+                                <h2 class="text-xl font-semibold mb-2">{{ $offre->titre }}</h2>
+                                <p class="text-gray-600 mb-4">{{ Str::limit($offre->description, 100) }}</p>
+                                <p class="text-gray-600 mb-2">Mission : {{ Str::limit($offre->mission, 100) }}</p>
+                                @if($offre->salaire)
+                                    <p class="text-gray-600 mb-2">Salaire : {{ number_format($offre->salaire, 2) }} €</p>
                                 @endif
-                            @elseif($offre->closed == 1)
-                                <p class="text-red-500 mb-2">Cloturée</p>
-                            @endif
-                            <br>
-                            <a href="{{ route('offre.show', $offre) }}" class="text-blue-500 hover:text-blue-700">Voir plus</a>
-                            @if(Auth::user()->id == $offre->ref_user)
-                            <a href="{{ route('offre.edit', $offre) }}" class="text-green-500 hover:text-green-700 ml-2">Modifier</a>
-                            @endif
-                            @if(Auth::user()->id == $offre->ref_user)
-                            <form id="delete-form-{{ $offre->id }}" action="{{ route('offre.destroy', $offre) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" onclick="confirmDelete('delete-form-{{ $offre->id }}')" class="text-red-500 hover:text-red-700 ml-2">Supprimer</button>
-                            </form>
-                            @endif
-                        </div>
+                                @if(Auth::user()->id == $offre->ref_user)
+                                    @if($offre->closed == 1)
+                                        <button id="cloturerButton-{{ $offre->id }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" data-offre-id="{{ $offre->id }}">
+                                            Cloturée
+                                        </button>
+                                    @else
+                                        <button id="cloturerButton-{{ $offre->id }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" data-offre-id="{{ $offre->id }}">
+                                            Clôturer
+                                        </button>
+                                    @endif
+                                @elseif($offre->closed == 1)
+                                    <p class="text-red-500 mb-2">Cloturée</p>
+                                @endif
+                                <br>
+                                <a href="{{ route('offre.show', $offre) }}" class="text-blue-500 hover:text-blue-700">Voir plus</a>
+                                @if(Auth::user()->id == $offre->ref_user)
+                                    <a href="{{ route('offre.edit', $offre) }}" class="text-green-500 hover:text-green-700 ml-2">Modifier</a>
+                                    <form id="delete-form-{{ $offre->id }}" action="{{ route('offre.destroy', $offre) }}" method="POST" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" onclick="confirmDelete('delete-form-{{ $offre->id }}')" class="text-red-500 hover:text-red-700 ml-2">Supprimer</button>
+                                    </form>
+                                @endif
+                            </div>
                         @endif
                     @endforeach
-                    @if($offres->isEmpty() || $offres->where('closed', 1)->count() == $offres->count() || $offres->where("ref_user",Auth::user()->id)->count() < 1)
-                    <check>
+                    @if($offres->isEmpty() || $offres->every(fn($offre) => $offre->closed == 1 && $offre->ref_user != Auth::user()->id))
                         <div class="bg-white shadow-md rounded-lg p-6 py-10 px-10">
                             <p class="text-gray-600 mb-4">Aucune offre d'emploi pour le moment.</p>
                         </div>
-                    </check>
                     @endif
                 </div>
                 <div class="flex items-center justify-end mt-4">
-                    @if(Auth::user()->ref_role == 3 || Auth::user()->ref_role == 4 )
-                        <br>
-                    <form action="{{ route('offre.create') }}" method="GET">
-                    @csrf
-                    <button type="submit" onclick="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ">
-                        Créer une nouvelle offre
-                    </button>
-                    </form>
+                    @if(Auth::user()->ref_role == 3 || Auth::user()->ref_role == 4)
+                        <form action="{{ route('offre.create') }}" method="GET">
+                            @csrf
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Créer une nouvelle offre
+                            </button>
+                        </form>
                     @endif
                 </div>
             </div>
@@ -84,14 +85,14 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('input[type="checkbox"][id^="cloturerCheckbox-"]').forEach(function(checkbox) {
-                checkbox.addEventListener('change', function () {
+            document.querySelectorAll('button[id^="cloturerButton-"]').forEach(function(button) {
+                button.addEventListener('click', function () {
                     let offreId = this.getAttribute('data-offre-id');
-                    let isCloturer = this.checked ? 1 : 0;
+                    let isCloturer = this.classList.contains('bg-red-500') ? 0 : 1;
 
                     Swal.fire({
                         title: 'Êtes-vous sûr ?',
-                        text: "Vous êtes sur le point de cloturer cette offre.",
+                        text: "Vous êtes sur le point de modifier l'etat de cette offre.",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#d33',
@@ -113,6 +114,8 @@
                             })
                                 .then(response => {
                                     if (response.ok) {
+                                        this.classList.toggle('bg-red-500', isCloturer);
+                                        this.classList.toggle('bg-green-500', !isCloturer);
                                         Swal.fire(
                                             'Mis à jour!',
                                             'L\'état de l\'offre a été mis à jour.',
@@ -133,8 +136,6 @@
                                         'error'
                                     );
                                 });
-                        } else {
-                            checkbox.checked = !isCloturer;
                         }
                     });
                 });

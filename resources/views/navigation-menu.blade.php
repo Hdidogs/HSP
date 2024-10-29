@@ -15,7 +15,7 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Accueil') }}
                     </x-nav-link>
-                    @if(Auth::user()->ref_role == 3 || Auth::user()->ref_role == 4 )
+                    @if(Auth::user()->ref_role == 3 || Auth::user()->ref_role == 4 || Auth::user()->ref_role == 2)
                     <x-nav-link href="{{ route('joboffers.index') }}" :active="request()->routeIs('joboffers.index')">
                         {{ __('Offres d\'emploi') }}
                     </x-nav-link>

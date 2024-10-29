@@ -65,7 +65,7 @@ class OffreController extends Controller
     {
         $offre->delete();
 
-        return redirect()->route('offre .index');
+        return redirect()->route('offre.index');
     }
 
     public function cloturer(Request $request, Offre $offre)
