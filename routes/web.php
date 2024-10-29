@@ -16,9 +16,7 @@ use App\Http\Controllers\SpecialiteController;
 
 // Route vers les offres d'emploi
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AccueilController::class, 'index'])->name('dashboard');
 
 Route::get('/offres/{offre}/postuler', [OffreController::class, 'showPostulerForm'])->name('offre.postuler');
 Route::post('/offres/{offre}/postuler', [OffreController::class, 'postuler'])->name('offre.postuler.submit');
@@ -47,11 +45,5 @@ Route::post('/evenement/{evenement}/inscription', [EvenementController::class, '
 Route::post('/evenement/{evenement}/inscription', [EvenementController::class, 'inscription'])->name('evenement.inscription');
 Route::delete('/evenement/{evenement}/desinscription', [EvenementController::class, 'desinscription'])->name('evenement.desinscription');
 
+Route::get('/dashboard', [AccueilController::class, 'index'])->name('dashboard');
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', [AccueilController::class, 'index'])->name('dashboard');
-});
