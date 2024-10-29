@@ -9,11 +9,10 @@ class Forum extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nom', 'ref_user'];
+    protected $fillable = ['nom'];
 
-    public function user()
+    public function posts()
     {
-        return $this->belongsTo(User::class , 'ref_user');
+        return $this->hasMany(Post::class, 'ref_forum');
     }
 }
-
