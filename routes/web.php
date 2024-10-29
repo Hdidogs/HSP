@@ -45,7 +45,6 @@ Route::delete('evenement/{evenement}', [EvenementController::class, 'destroy'])-
 Route::post('/evenement/{evenement}/inscription', [EvenementController::class, 'inscription'])->name('evenement.inscription');
 Route::post('/evenement/{evenement}/inscription', [EvenementController::class, 'inscription'])->name('evenement.inscription');
 Route::delete('/evenement/{evenement}/desinscription', [EvenementController::class, 'desinscription'])->name('evenement.desinscription');
-<<<<<<< HEAD
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('post.show');
 Route::resource('post', PostController::class)->except(['show']);
 #nouvell    
@@ -54,8 +53,4 @@ Route::put('/messages/{message}', [MessageController::class, 'update'])->name('m
 Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 Route::post('/messages/{message}/upvote', [MessageController::class, 'upvote'])->name('messages.upvote');
 Route::post('/messages/{message}/downvote', [MessageController::class, 'downvote'])->name('messages.downvote');
-=======
-
-Route::get('/dashboard', [AccueilController::class, 'index'])->name('dashboard');
->>>>>>> 1570a1846eb63973c0f44dd5f1cc46257cb0760e
 
