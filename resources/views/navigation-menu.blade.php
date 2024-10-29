@@ -11,17 +11,6 @@
                     </a>
                 </div>
 
-<<<<<<< HEAD
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Accueil') }}
-                    </x-nav-link>
-                    @if(Auth::user()->ref_role == 3 || Auth::user()->ref_role == 4 || Auth::user()->ref_role == 2)
-                    <x-nav-link href="{{ route('joboffers.index') }}" :active="request()->routeIs('joboffers.index')">
-                        {{ __('Offres d\'emploi') }}
-                    </x-nav-link>
-                    @endif
-=======
                 @if (Route::has('login'))
                     <nav class="-mx-3 flex flex-1 justify-end">
                         @auth
@@ -34,7 +23,6 @@
                                         {{ __('Offres d\'emploi') }}
                                     </x-nav-link>
                                 @endif
->>>>>>> 472e82738d97aedddf232418b1d67a76adc118f7
 
                                 <x-nav-link href="{{ route('activity.index') }}" :active="request()->routeIs('activity.index')">
                                     {{ __('Activité') }}
