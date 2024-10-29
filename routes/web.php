@@ -17,9 +17,7 @@ use App\Http\Controllers\MessageController;
 
 // Route vers les offres d'emploi
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AccueilController::class, 'index'])->name('dashboard');
 
 Route::get('/offres/{offre}/postuler', [OffreController::class, 'showPostulerForm'])->name('offre.postuler');
 Route::post('/offres/{offre}/postuler', [OffreController::class, 'postuler'])->name('offre.postuler.submit');
@@ -47,6 +45,7 @@ Route::delete('evenement/{evenement}', [EvenementController::class, 'destroy'])-
 Route::post('/evenement/{evenement}/inscription', [EvenementController::class, 'inscription'])->name('evenement.inscription');
 Route::post('/evenement/{evenement}/inscription', [EvenementController::class, 'inscription'])->name('evenement.inscription');
 Route::delete('/evenement/{evenement}/desinscription', [EvenementController::class, 'desinscription'])->name('evenement.desinscription');
+<<<<<<< HEAD
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('post.show');
 Route::resource('post', PostController::class)->except(['show']);
 #nouvell    
@@ -55,11 +54,8 @@ Route::put('/messages/{message}', [MessageController::class, 'update'])->name('m
 Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
 Route::post('/messages/{message}/upvote', [MessageController::class, 'upvote'])->name('messages.upvote');
 Route::post('/messages/{message}/downvote', [MessageController::class, 'downvote'])->name('messages.downvote');
+=======
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', [AccueilController::class, 'index'])->name('dashboard');
-});
+Route::get('/dashboard', [AccueilController::class, 'index'])->name('dashboard');
+>>>>>>> 1570a1846eb63973c0f44dd5f1cc46257cb0760e
+
