@@ -11,9 +11,9 @@ class Forum extends Model
 
     protected $fillable = ['nom', 'ref_user'];
 
-    public function posts()
+    public function messages()
     {
-        return $this->hasMany(Post::class, 'ref_forum');
+        return $this->hasMany(Message::class, 'ref_forum');
     }
 
     public function user()
