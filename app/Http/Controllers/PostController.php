@@ -11,13 +11,13 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('user', 'forum')->latest()->get();
         return view('post.index', compact('posts'));
     }
 
     public function create()
     {
-        $forums = Forum::all(); // Pour lister les forums
+        $forums = Forum::all();
         return view('post.create', compact('forums'));
     }
 
@@ -32,21 +32,22 @@ class PostController extends Controller
         Post::create([
             'titre' => $request->titre,
             'description' => $request->description,
-            'ref_user' => Auth::id(), // ID de l'utilisateur connecté
+            'ref_user' => Auth::id(),
             'ref_forum' => $request->ref_forum,
         ]);
 
         return redirect()->route('post.index');
     }
 
-    public function show(Post $post)
+    public function show($id)
     {
+        $post = Post::with(['messages.sender', 'user', 'forum'])->findOrFail($id);
         return view('post.show', compact('post'));
     }
 
     public function edit(Post $post)
     {
-        $forums = Forum::all(); // Pour lister les forums
+        $forums = Forum::all();
         return view('post.edit', compact('post', 'forums'));
     }
 
