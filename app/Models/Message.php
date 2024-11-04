@@ -9,15 +9,15 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'recipient_id', 'content', 'is_read'];
+    protected $fillable = ['ref_user', 'downvote', 'upvote', 'libelle', 'ref_post'];
 
     public function sender()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'ref_user');
     }
 
-    public function recipient()
+    public function post()
     {
-        return $this->belongsTo(User::class, 'recipient_id');
+        return $this->belongsTo(Post::class, 'ref_post');
     }
 }

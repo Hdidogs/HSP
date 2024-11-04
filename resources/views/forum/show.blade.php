@@ -9,7 +9,7 @@
                                 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
                                 {{ $forum->nom }}</h1>
                             <p class="mt-2 text-sm text-gray-600">Créé par <span
-                                    class="font-medium text-purple-600">{{ $forum->user->name }}</span></p>
+                                    class="font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-6">{{ $forum->user->nom }}</span></p>
                         </div>
                         <a href="{{ route('forum.index') }}"
                             class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-150 ease-in-out">
@@ -31,7 +31,7 @@
                             class="space-y-4 h-96 overflow-y-auto mb-6 p-4 bg-white rounded-lg shadow-inner">
                             <!-- Les messages seront ajoutés ici dynamiquement -->
                         </div>
-                        <form id="chat-form" class="mt-6">
+                        <form method="POST" action="{{ route('login') }}" id="chat-form" class="mt-6">
                             <div class="flex rounded-md shadow-sm">
                                 <input type="text" id="chat-input"
                                     class="flex-1 min-w-0 block w-full px-4 py-3 rounded-l-full text-gray-900 border border-purple-200 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"

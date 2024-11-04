@@ -44,7 +44,7 @@
                                     {{ $forum->id }}</span>
                             </div>
                             <p class="text-gray-600 mb-4">Créé par: <span
-                                    class="font-medium">{{ $forum->creator_name ?? 'Inconnu' }}</span></p>
+                                    class="font-medium">{{ $forum->name ?? 'Inconnu' }}</span></p>
                             <div class="flex justify-between items-center mt-4">
                                 <a href="{{ route('forum.show', $forum->id) }}"
                                     class="text-blue-600 hover:text-blue-800 font-medium flex items-center transition duration-300 ease-in-out">

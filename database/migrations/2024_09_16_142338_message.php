@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('upvote');
             $table->integer('downvote');
             $table->foreignId('ref_user')->constrained('users');
-            $table->foreignId('ref_post')->constrained('posts');
+            $table->foreignId('ref_forum')->constrained('forums');
             $table->timestamps();
         });
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('messages');
     }
 };

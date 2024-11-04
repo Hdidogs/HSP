@@ -12,7 +12,7 @@ class ForumController extends Controller
     public function index()
     {
         $forums = DB::table('forums')
-            ->select('forums.*', 'users.nom as creator_name')
+            ->select('forums.*', 'users.nom as name')
             ->leftJoin('users', 'forums.ref_user', '=', 'users.id')
             ->latest('forums.created_at')
             ->get();
@@ -22,12 +22,6 @@ class ForumController extends Controller
 
     public function show(Forum $forum)
     {
-        $forum->load([
-            'posts' => function ($query) {
-                $query->latest()->with('user');
-            },
-            'user'
-        ]);
         return view('forum.show', compact('forum'));
     }
 

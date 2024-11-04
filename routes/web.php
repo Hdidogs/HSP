@@ -3,6 +3,7 @@
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\HopitalController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActiviteController;
@@ -46,4 +47,5 @@ Route::post('/evenement/{evenement}/inscription', [EvenementController::class, '
 Route::delete('/evenement/{evenement}/desinscription', [EvenementController::class, 'desinscription'])->name('evenement.desinscription');
 
 Route::get('/dashboard', [AccueilController::class, 'index'])->name('dashboard');
+Route::post('/messages/store', [MessageController::class, 'store'])->name('messages.store');
 
