@@ -17,6 +17,7 @@ class Evenement extends Model
         'nb_place',
         'date',
     ];
+
     public function inscriptions()
     {
         return $this->hasMany(Inscription::class, 'ref_evenement');
@@ -26,5 +27,10 @@ class Evenement extends Model
     public function isUserInscrit($userId)
     {
         return $this->inscriptions()->where('ref_user', $userId)->exists();
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'organisations', 'ref_evenement', 'ref_user');
     }
 }
