@@ -218,4 +218,5 @@
             @method('DELETE')
         </form>
     @endforeach
+    
 </x-app-layout>
