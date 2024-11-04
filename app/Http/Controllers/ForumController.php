@@ -22,7 +22,8 @@ class ForumController extends Controller
 
     public function show(Forum $forum)
     {
-        return view('forum.show', compact('forum'));
+        $messages = $forum->messages()->with('sender')->get();
+        return view('forum.show', compact('forum', 'messages'));
     }
 
     public function create()

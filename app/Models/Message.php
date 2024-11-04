@@ -9,7 +9,7 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ref_user', 'downvote', 'upvote', 'libelle', 'ref_post'];
+    protected $fillable = ['ref_user', 'downvote', 'upvote', 'libelle', 'ref_forum'];
 
     public function sender()
     {
@@ -18,6 +18,6 @@ class Message extends Model
 
     public function post()
     {
-        return $this->belongsTo(Post::class, 'ref_post');
+        return $this->belongsTo(Forum::class, 'ref_forum');
     }
 }

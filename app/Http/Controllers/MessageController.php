@@ -7,6 +7,7 @@ use App\Models\Forum;
 use Illuminate\Http\Request;
 use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class MessageController extends Controller
 {
@@ -16,20 +17,20 @@ class MessageController extends Controller
         $validatedData = $request->validate([
             'ref_user' => 'required|exists:users,id',
             'libelle'  => 'required|string|max:255',
-            'ref_post' => 'required|exists:posts,id',
-            'downvote' => 'required|integer',
-            'upvote'   => 'required|integer',
+            'ref_forum' => 'required|exists:forums,id',
         ]);
 
-        $forum = Forum::create([
+        // Créer le message
+        Message::create([
             'libelle' => $validatedData['libelle'],
-            'ref_user' => Auth::user()->id,
-            'ref_post' => $validatedData['ref_post'],
+            'ref_user' => $validatedData['ref_user'],
+            'ref_forum' => $validatedData['ref_forum'],
             'downvote' => 0,
             'upvote' => 0,
         ]);
 
-        return redirect()->route('forum.index')->with('success', 'Forum créé avec succès.');
+        // Rediriger vers le forum
+        return redirect()->route('forum.show', ['forum' => $validatedData['ref_forum']])->with('success', 'Message envoyé avec succès.');
     }
 
     public function update(Request $request, Message $message)
