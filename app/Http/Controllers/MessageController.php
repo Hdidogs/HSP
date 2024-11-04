@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Forum;
 use Illuminate\Http\Request;
 use App\Models\Message;
@@ -29,5 +30,41 @@ class MessageController extends Controller
         ]);
 
         return redirect()->route('forum.index')->with('success', 'Forum créé avec succès.');
+    }
+
+    public function update(Request $request, Message $message)
+    {
+        $this->authorize('update', $message);
+
+        $request->validate([
+            'libelle' => 'required|string',
+        ]);
+
+        $message->update([
+            'libelle' => $request->libelle,
+        ]);
+
+        return $message;
+    }
+
+    public function destroy(Message $message)
+    {
+        $this->authorize('delete', $message);
+
+        $message->delete();
+
+        return response()->json(['message' => 'Message deleted successfully']);
+    }
+
+    public function upvote(Message $message)
+    {
+        $message->increment('upvote');
+        return $message;
+    }
+
+    public function downvote(Message $message)
+    {
+        $message->increment('downvote');
+        return $message;
     }
 }

@@ -73,7 +73,7 @@ class OffreController extends Controller
         $offre->closed = $request->input('closed',0);
         $offre->save();
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true , 'closed' => $offre->closed]);
     }
 
     public function postuler(Request $request, Offre $offre)

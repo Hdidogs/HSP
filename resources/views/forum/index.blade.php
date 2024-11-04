@@ -65,13 +65,14 @@
                                                 d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                                         </svg>
                                     </a>
-                                    <form action="{{ route('forum.destroy', $forum->id) }}" method="POST"
+                                    <form id="delete-form-{{ $forum->id }}"
+                                        action="{{ route('forum.destroy', $forum->id) }}" method="POST"
                                         class="inline-block">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"
+                                        <button type="button"
                                             class="text-red-600 hover:text-red-800 transition duration-300 ease-in-out"
-                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce forum ?')">
+                                            onclick="confirmDelete('delete-form-{{ $forum->id }}')">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                                 fill="currentColor">
                                                 <path fill-rule="evenodd"
@@ -89,7 +90,25 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        function confirmDelete(formId) {
+            Swal.fire({
+                title: 'Êtes-vous sûr ?',
+                text: "Vous ne pourrez pas revenir en arrière !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Oui, supprimer !',
+                cancelButtonText: 'Annuler'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(formId).submit();
+                }
+            });
+        }
+
         document.getElementById('searchInput').addEventListener('input', function () {
             var searchTerm = this.value.toLowerCase();
             var forumCards = document.querySelectorAll('.grid > div');
