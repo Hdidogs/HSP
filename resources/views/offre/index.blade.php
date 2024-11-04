@@ -1,4 +1,15 @@
 <x-app-layout>
+    <style>
+        .job-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
     <div class="py-12 bg-gray-100">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">Offres d'emploi 💼</h1>
@@ -24,7 +35,7 @@
             @if($offres->isNotEmpty())
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($offres as $offre)
-                        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg job-card">
                             <div class="p-6">
                                 <h2 class="text-xl font-semibold mb-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2"
@@ -158,15 +169,13 @@
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Oui, 
-
- supprimer !',
+                confirmButtonText: 'Oui, supprimer !',
                 cancelButtonText: 'Annuler'
             }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById(formId).submit();
-                    }
-                });
+                if (result.isConfirmed) {
+                    document.getElementById(formId).submit();
+                }
+            });
         }
 
         document.addEventListener('DOMContentLoaded', function () {

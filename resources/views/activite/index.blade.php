@@ -23,7 +23,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($activites as $activite)
-                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div
+                        class="bg-white overflow-hidden shadow-xl sm:rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-2xl">
                         <div class="p-6">
                             <h2 class="text-xl font-semibold mb-2 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" fill="none"
