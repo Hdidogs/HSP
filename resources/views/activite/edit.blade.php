@@ -36,7 +36,7 @@
                             <div>
                                 <label for="nb_place" class="block text-sm font-medium text-gray-700">Nombre de
                                     places</label>
-                                <input type="number" name="nb_place" id="nb_place" min="0" required
+                                <input type="number" name="nb_place" id="nb_place" min="1" required
                                     value="{{ old('nb_place', $activite->nb_place) }}"
                                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="Capacité maximale">

@@ -65,15 +65,14 @@ class ActiviteController extends Controller
     // Mettre à jour une activité
     public function update(Request $request, Activite $activite)
     {
-        $request->validate([
-            'titre' => 'required',
-            'desc' => 'required',
+        $validatedData = $request->validate([
+            'titre' => 'required|string|max:255',
+            'desc' => 'required|string',
             'date' => 'required|date_format:Y-m-d\TH:i',
-            'nb_place' => 'required|integer',
-            'ref_user' => 'required|integer',
+            'nb_place' => 'required|integer|min:1',
         ]);
 
-        $activite->update($request->all());
+        $activite->update($validatedData);
 
         return redirect()->route('activite.index')
             ->with('success', 'Activité mise à jour avec succès.');
