@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Evenement;
 use App\Models\Inscription;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class EvenementController extends Controller
 {
     public function index()
     {
-        $evenements = Evenement::all();
+        $evenements = Evenement::where('date', '>', Carbon::now()->subDay())->get();
         return view('evenement.index', compact('evenements'));
     }
 
@@ -25,11 +26,11 @@ class EvenementController extends Controller
         $request->validate([
             'type' => 'required|string|max:255',
             'titre' => 'required|string|max:255',
-            'date' => 'required|date_format:Y-m-d\TH:i',
+            'date' => 'required|date_format:Y-m-d\TH:i|after:now',
             'description' => 'required|string',
             'adresse' => 'required|string|max:255',
             'elementrequis' => 'required|string|max:255',
-            'nb_place' => 'required|integer',
+            'nb_place' => 'required|integer|min:0',
         ]);
 
         Evenement::create($request->all());
@@ -47,11 +48,11 @@ class EvenementController extends Controller
         $request->validate([
             'type' => 'required|string|max:255',
             'titre' => 'required|string|max:255',
-            'date' => 'required|date_format:Y-m-d\TH:i',
+            'date' => 'required|date_format:Y-m-d\TH:i|after:now',
             'description' => 'required|string',
             'adresse' => 'required|string|max:255',
             'elementrequis' => 'required|string|max:255',
-            'nb_place' => 'required|integer',
+            'nb_place' => 'required|integer|min:0',
         ]);
 
         $evenement->update($request->all());
@@ -61,43 +62,57 @@ class EvenementController extends Controller
 
     public function destroy(Evenement $evenement)
     {
-        // Supprimer toutes les inscriptions liées à cet événement
-        Inscription::where('ref_evenement', $evenement->id)->delete();
-
-        // Supprimer l'événement
-        $evenement->delete();
+        DB::transaction(function () use ($evenement) {
+            Inscription::where('ref_evenement', $evenement->id)->delete();
+            $evenement->delete();
+        });
 
         return redirect()->route('evenement.index')->with('status', 'Événement et toutes les inscriptions associées supprimés avec succès!');
     }
 
-
     public function inscription(Request $request, Evenement $evenement)
     {
-        // Vérifiez si l'utilisateur est déjà inscrit à cet événement
-        $inscriptionExistante = Inscription::where('ref_evenement', $evenement->id)
-            ->where('ref_user', auth()->id())
-            ->first();
+        return DB::transaction(function () use ($evenement) {
+            $inscriptionExistante = Inscription::where('ref_evenement', $evenement->id)
+                ->where('ref_user', auth()->id())
+                ->first();
 
-        if ($inscriptionExistante) {
-            return redirect()->route('evenement.index')->with('error', 'Vous êtes déjà inscrit à cet événement.');
-        }
+            if ($inscriptionExistante) {
+                return redirect()->route('evenement.index')->with('error', 'Vous êtes déjà inscrit à cet événement.');
+            }
 
-        // Créer une nouvelle inscription
-        Inscription::create([
-            'ref_evenement' => $evenement->id,
-            'ref_user' => auth()->id(), // Assurez-vous que l'utilisateur est authentifié
-        ]);
+            if ($evenement->nb_place <= 0) {
+                return redirect()->route('evenement.index')->with('error', 'Désolé, il n\'y a plus de places disponibles pour cet événement.');
+            }
 
-        return redirect()->route('evenement.index')->with('status', 'Vous êtes bien inscrit. Merci !');
+            if ($evenement->date < Carbon::now()) {
+                return redirect()->route('evenement.index')->with('error', 'Désolé, cet événement est déjà passé.');
+            }
+
+            Inscription::create([
+                'ref_evenement' => $evenement->id,
+                'ref_user' => auth()->id(),
+            ]);
+
+            $evenement->decrement('nb_place');
+
+            return redirect()->route('evenement.index')->with('status', 'Vous êtes bien inscrit. Merci !');
+        });
     }
 
     public function desinscription(Request $request, Evenement $evenement)
     {
-        // Supprimer l'inscription de l'utilisateur à cet événement
-        Inscription::where('ref_evenement', $evenement->id)
-            ->where('ref_user', auth()->id())
-            ->delete();
+        return DB::transaction(function () use ($evenement) {
+            $deleted = Inscription::where('ref_evenement', $evenement->id)
+                ->where('ref_user', auth()->id())
+                ->delete();
 
-        return redirect()->route('evenement.index')->with('status', 'Vous êtes bien désinscrit. Merci !');
+            if ($deleted) {
+                $evenement->increment('nb_place');
+                return redirect()->route('evenement.index')->with('status', 'Vous êtes bien désinscrit. Merci !');
+            }
+
+            return redirect()->route('evenement.index')->with('error', 'Vous n\'étiez pas inscrit à cet événement.');
+        });
     }
 }
