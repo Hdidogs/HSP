@@ -14,9 +14,9 @@
                     <p>{{ session('error') }}</p>
                 </div>
             @endif
-
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-4xl font-bold text-gray-800">Événements</h1>
+                @if(Auth::user()->ref_role == 3 || Auth::user()->ref_role == 4)
                 <a href="{{ route('evenement.create') }}"
                     class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
@@ -27,6 +27,7 @@
                     </svg>
                     Créer un événement
                 </a>
+                @endif
             </div>
 
             <div class="relative mb-6">
@@ -41,6 +42,7 @@
             </div>
 
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                @if($evenements->isNotEmpty())
                 @foreach($evenements as $evenement)
                     <div
                         class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
@@ -88,6 +90,7 @@
                             </div>
                             <div class="mt-4 flex justify-between items-center">
                                 <div class="flex space-x-2">
+                                    @if(Auth::user()->ref_role == 3 || Auth::user()->ref_role == 4)
                                     <a href="{{ route('evenement.edit', $evenement->id) }}"
                                         class="text-yellow-600 hover:text-yellow-800 transition duration-300 ease-in-out">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
@@ -106,23 +109,28 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </button>
+                                    @endif
                                 </div>
                                 <div>
                                     @if($evenement->date < now())
                                         <span class="bg-gray-500 text-white font-bold py-2 px-4 rounded opacity-75">
                                             Clôturé
                                         </span>
-                                    @elseif($evenement->isUserInscrit(auth()->id()))
-                                        <button onclick="confirmDesinscription({{ $evenement->id }})"
-                                            class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
-                                            Se désinscrire
-                                        </button>
                                     @else
-                                        <button onclick="confirmInscription({{ $evenement->id }})"
-                                            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
-                                            {{ $evenement->nb_place <= 0 ? 'disabled' : '' }}>
-                                            {{ $evenement->nb_place <= 0 ? 'Complet' : 'S\'inscrire' }}
-                                        </button>
+                                        @if(Auth::user()->id != $evenement->ref_user)
+                                            @if($evenement->isUserInscrit(auth()->id()))
+                                                <button onclick="confirmDesinscription({{ $evenement->id }})"
+                                                        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                                                    Se désinscrire
+                                                </button>
+                                            @else
+                                                <button onclick="confirmInscription({{ $evenement->id }})"
+                                                        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+                                                    {{ $evenement->nb_place <= 0 ? 'disabled' : '' }}>
+                                                    {{ $evenement->nb_place <= 0 ? 'Complet' : 'S\'inscrire' }}
+                                                </button>
+                                            @endif
+                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -130,6 +138,10 @@
                     </div>
                 @endforeach
             </div>
+            @else
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 text-center">
+                <h2 class="text-xl font-semibold text-gray-800">Aucun événement trouvé</h2>
+                @endif
         </div>
     </div>
 
