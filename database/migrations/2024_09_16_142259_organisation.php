@@ -15,13 +15,12 @@ return new class extends Migration
             $table->unsignedBigInteger('ref_user');
             $table->unsignedBigInteger('ref_evenement');
 
-            $table->foreign('ref_user')->references('id')->on('users');
-            $table->foreign('ref_evenement')->references('id')->on('evenements');
+            $table->foreign('ref_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('ref_evenement')->references('id')->on('evenements')->onDelete('cascade');
             $table->timestamps();
 
             $table->primary(['ref_user', 'ref_evenement']);
         });
-
     }
 
     /**
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('organisations');
     }
 };

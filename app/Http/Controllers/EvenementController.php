@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organisation;
 use Illuminate\Http\Request;
 use App\Models\Evenement;
 use App\Models\Inscription;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -12,9 +14,17 @@ class EvenementController extends Controller
 {
     public function index()
     {
+        $userId = Auth::id();
+
         $evenements = Evenement::where('date', '>', Carbon::now()->subDay())->get();
+
+        foreach ($evenements as $evenement) {
+            $evenement->isCreator = $evenement->isUserCreator($userId);
+        }
+
         return view('evenement.index', compact('evenements'));
     }
+
 
     public function create()
     {
@@ -23,19 +33,25 @@ class EvenementController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'type' => 'required|string|max:255',
+        $validatedData = $request->validate([
             'titre' => 'required|string|max:255',
-            'date' => 'required|date_format:Y-m-d\TH:i|after:now',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
+            'date' => 'required|date|after:now',
             'adresse' => 'required|string|max:255',
-            'elementrequis' => 'required|string|max:255',
-            'nb_place' => 'required|integer|min:0',
+            'type' => 'required|string|max:100',
+            'elementrequis' => 'nullable|string',
+            'nb_place' => 'required|integer|min:1',
         ]);
 
-        Evenement::create($request->all());
+        $evenement = Evenement::create($validatedData);
 
-        return redirect()->route('evenement.index')->with('status', 'Événement créé avec succès!');
+        Organisation::create([
+            'ref_user' => Auth::id(),
+            'ref_evenement' => $evenement->id,
+        ]);
+
+        // Redirect or return a response
+        return redirect()->route('evenement.index')->with('status', 'Événement créé avec succès !');
     }
 
     public function edit(Evenement $evenement)
@@ -60,15 +76,17 @@ class EvenementController extends Controller
         return redirect()->route('evenement.index')->with('status', 'Événement mis à jour avec succès!');
     }
 
-    public function destroy(Evenement $evenement)
+    public function destroy($id)
     {
-        DB::transaction(function () use ($evenement) {
-            Inscription::where('ref_evenement', $evenement->id)->delete();
-            $evenement->delete();
-        });
+        $evenement = Evenement::findOrFail($id);
 
-        return redirect()->route('evenement.index')->with('status', 'Événement et toutes les inscriptions associées supprimés avec succès!');
+        Organisation::where('ref_evenement', $id)->delete();
+
+        $evenement->delete();
+
+        return redirect()->route('evenement.index')->with('status', 'Événement et organisations associées supprimés avec succès !');
     }
+
 
     public function inscription(Request $request, Evenement $evenement)
     {
@@ -114,5 +132,13 @@ class EvenementController extends Controller
 
             return redirect()->route('evenement.index')->with('error', 'Vous n\'étiez pas inscrit à cet événement.');
         });
+    }
+    public function inscrits(Evenement $evenement)
+    {
+        $inscriptions = Inscription::where('ref_evenement', $evenement->id)
+            ->with('user')
+            ->get();
+
+        return view('evenement.inscrits', compact('evenement', 'inscriptions'));
     }
 }

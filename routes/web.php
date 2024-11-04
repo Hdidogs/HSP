@@ -19,6 +19,7 @@ use App\Http\Controllers\SpecialiteController;
 
 Route::get('/', [AccueilController::class, 'index'])->name('dashboard');
 
+Route::get('/evenement/{evenement}/inscrits', [EvenementController::class, 'inscrits'])->name('evenement.inscrits');
 Route::get('/offres/{offre}/postuler', [OffreController::class, 'showPostulerForm'])->name('offre.postuler');
 Route::post('/offres/{offre}/postuler', [OffreController::class, 'postuler'])->name('offre.postuler.submit');
 Route::put('/offres/{offre}/cloturer', [OffreController::class, 'cloturer'])->name('offre.cloturer');

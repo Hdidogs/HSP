@@ -23,14 +23,22 @@ class Evenement extends Model
         return $this->hasMany(Inscription::class, 'ref_evenement');
     }
 
-    // Vérifier si un utilisateur est inscrit à cet événement
     public function isUserInscrit($userId)
     {
         return $this->inscriptions()->where('ref_user', $userId)->exists();
     }
 
-    public function users()
+    public function organisations()
     {
-        return $this->belongsToMany(User::class, 'organisations', 'ref_evenement', 'ref_user');
+        return $this->hasMany(Organisation::class, 'ref_evenement');
+    }
+
+    public function isUserCreator($userId)
+    {
+        return $this->organisations()->where('ref_user', $userId)->exists();
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'ref_user');
     }
 }
