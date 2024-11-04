@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="min-h-screen bg-gray-100 p-8">
         <div class="max-w-6xl mx-auto">
-            <h1 class="text-4xl font-bold mb-4">Les inscrits pour{{ $evenement->titre }}"</h1>
+            <h1 class="text-4xl font-bold mb-4">Les inscrits pour {{ $evenement->titre }}"</h1>
 
             @if($inscriptions->isEmpty())
                 <p>Aucun utilisateur n'est inscrit pour cet événement.</p>
