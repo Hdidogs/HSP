@@ -62,3 +62,6 @@ Route::post('/messages/{message}/upvote', [MessageController::class, 'upvote'])-
 Route::post('/messages/{message}/downvote', [MessageController::class, 'downvote'])->name('messages.downvote');
 
 Route::get('/forum/{forum}', [ForumController::class, 'show'])->name('forum.show');
+
+Route::delete('/evenements/{evenement}/users/{user}', [EvenementController::class, 'removeUserFromEvent'])
+    ->name('evenement.removeUserFromEvent');

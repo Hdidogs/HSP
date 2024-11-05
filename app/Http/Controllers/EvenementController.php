@@ -9,6 +9,7 @@ use App\Models\Inscription;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Models\User;
 
 class EvenementController extends Controller
 {
@@ -148,10 +149,31 @@ class EvenementController extends Controller
     // Affiche la liste des inscrits à un événement
     public function inscrits(Evenement $evenement)
     {
-        $inscriptions = Inscription::where('ref_evenement', $evenement->id)
-            ->with('user')
-            ->get();
-
+        $inscriptions = $evenement->inscriptions()->with('user')->get();
         return view('evenement.inscrits', compact('evenement', 'inscriptions'));
     }
+
+    public function removeUserFromEvent(Evenement $evenement, $userId)
+    {
+        if (!$evenement->isUserCreator(auth()->id())) {
+            return redirect()->route('evenement.inscrits', $evenement->id)
+                ->with('error', 'Vous n\'avez pas la permission de supprimer des inscriptions pour cet événement.');
+        }
+
+        $deleted = Inscription::where('ref_evenement', $evenement->id)
+            ->where('ref_user', $userId)
+            ->delete();
+
+        if ($deleted) {
+            $evenement->increment('nb_place');
+            $user = User::find($userId);
+            $userName = $user ? $user->nom : 'L\'utilisateur';
+            return redirect()->route('evenement.inscrits', $evenement->id)
+                ->with('status', "{$userName} a bien été supprimé de l'événement \"{$evenement->titre}\".");
+        } else {
+            return redirect()->route('evenement.inscrits', $evenement->id)
+                ->with('error', 'Cet utilisateur n\'est pas inscrit à cet événement.');
+        }
+    }
+
 }

@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inscription extends Model
 {
-    use HasFactory;
-
-    protected $fillable = [
-        'ref_evenement',
-        'ref_user',
-    ];
+    protected $table = 'inscriptions';
+    protected $primaryKey = null;
+    public $incrementing = false;
+    protected $fillable = ['ref_user', 'ref_evenement'];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'ref_user');
+    }
+
+    public function evenement()
+    {
+        return $this->belongsTo(Evenement::class, 'ref_evenement');
     }
 }
