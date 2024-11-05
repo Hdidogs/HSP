@@ -5,18 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Entreprise;
 
-class EntrepriseController extends Controller{
+class EntrepriseController extends Controller
+{
 
-    public function index(){
+    // Affiche la liste de toutes les entreprises
+    public function index()
+    {
         $entreprises = Entreprise::all();
         return view('entreprise.index', compact('entreprises'));
     }
 
-    public function create(){
+    // Affiche le formulaire de création d'une entreprise
+    public function create()
+    {
         return view('entreprise.create');
     }
 
-    public function store(Request $request){
+    // Enregistre une nouvelle entreprise dans la base de données
+    public function store(Request $request)
+    {
         $validated = $request->validate([
             'nom' => 'required|string|max:255',
             'adresseweb' => 'required|string|max:255',
@@ -28,11 +35,15 @@ class EntrepriseController extends Controller{
         return redirect()->route('entreprise.index');
     }
 
-    public function edit(Entreprise $entreprise){
+    // Affiche le formulaire d'édition d'une entreprise
+    public function edit(Entreprise $entreprise)
+    {
         return view('entreprise.edit', compact('entreprise'));
     }
 
-    public function update(Request $request, Entreprise $entreprise){
+    // Met à jour les informations d'une entreprise existante
+    public function update(Request $request, Entreprise $entreprise)
+    {
         $validated = $request->validate([
             'nom' => 'required|string|max:255',
             'adresseweb' => 'required|string|max:255',

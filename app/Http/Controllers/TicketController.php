@@ -10,12 +10,14 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
+    // Affiche la liste de tous les tickets
     public function index()
     {
         $tickets = Ticket::all();
         return view('ticket.index', compact('tickets'));
     }
 
+    // Affiche le formulaire de création d'un nouveau ticket
     public function create()
     {
         $users = User::all();
@@ -24,6 +26,7 @@ class TicketController extends Controller
         return view('ticket.create', compact('users', 'importances', 'gestionnaires'));
     }
 
+    // Enregistre un nouveau ticket dans la base de données
     public function store(Request $request)
     {
         $request->validate([
@@ -39,6 +42,7 @@ class TicketController extends Controller
         return redirect()->route('ticket.index');
     }
 
+    // Affiche le formulaire d'édition d'un ticket existant
     public function edit($id)
     {
         $ticket = Ticket::findOrFail($id);
@@ -48,6 +52,7 @@ class TicketController extends Controller
         return view('tickets.edit', compact('ticket', 'users', 'importances', 'gestionnaires'));
     }
 
+    // Met à jour un ticket existant dans la base de données
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -64,6 +69,7 @@ class TicketController extends Controller
         return redirect()->route('ticket.index');
     }
 
+    // Supprime un ticket de la base de données
     public function destroy($id)
     {
         $ticket = Ticket::findOrFail($id);
@@ -71,6 +77,7 @@ class TicketController extends Controller
         return redirect()->route('ticket.index');
     }
 
+    // Affiche les détails d'un ticket spécifique
     public function show($id)
     {
         $ticket = Ticket::findOrFail($id);

@@ -9,6 +9,7 @@ class Gestionnaire extends Model
 {
     use HasFactory;
 
+    // Définit les champs qui peuvent être assignés en masse
     protected $fillable = [
         'ref_user',
     ];

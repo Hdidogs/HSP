@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class ForumController extends Controller
 {
+    // Affiche la liste des forums
     public function index()
     {
         $forums = DB::table('forums')
@@ -20,17 +21,20 @@ class ForumController extends Controller
         return view('forum.index', compact('forums'));
     }
 
+    // Affiche un forum spécifique et ses messages
     public function show(Forum $forum)
     {
         $messages = $forum->messages()->with('sender')->get();
         return view('forum.show', compact('forum', 'messages'));
     }
 
+    // Affiche le formulaire de création d'un forum
     public function create()
     {
         return view('forum.create');
     }
 
+    // Enregistre un nouveau forum
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -45,11 +49,13 @@ class ForumController extends Controller
         return redirect()->route('forum.index')->with('success', 'Forum créé avec succès.');
     }
 
+    // Affiche le formulaire d'édition d'un forum
     public function edit(Forum $forum)
     {
         return view('forum.edit', compact('forum'));
     }
 
+    // Met à jour un forum existant
     public function update(Request $request, Forum $forum)
     {
         $validatedData = $request->validate([
@@ -63,6 +69,7 @@ class ForumController extends Controller
         return redirect()->route('forum.index')->with('success', 'Forum mis à jour avec succès.');
     }
 
+    // Supprime un forum
     public function destroy(Forum $forum)
     {
         $forum->delete();

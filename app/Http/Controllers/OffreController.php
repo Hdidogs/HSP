@@ -8,19 +8,23 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+
 class OffreController extends Controller
 {
+    // Affiche la liste de toutes les offres
     public function index()
     {
         $offres = Offre::latest()->get();
         return view('offre.index', compact('offres'));
     }
 
+    // Affiche le formulaire de création d'une offre
     public function create()
     {
         return view('offre.create');
     }
 
+    // Enregistre une nouvelle offre
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -37,16 +41,19 @@ class OffreController extends Controller
         return redirect()->route('offre.index');
     }
 
+    // Affiche les détails d'une offre spécifique
     public function show(Offre $offre)
     {
         return view('offre.show', compact('offre'));
     }
 
+    // Affiche le formulaire d'édition d'une offre
     public function edit(Offre $offre)
     {
         return view('offre.edit', compact('offre'));
     }
 
+    // Met à jour une offre existante
     public function update(Request $request, Offre $offre)
     {
         $validatedData = $request->validate([
@@ -61,6 +68,7 @@ class OffreController extends Controller
         return redirect()->route('offre.index');
     }
 
+    // Supprime une offre
     public function destroy(Offre $offre)
     {
         $offre->delete();
@@ -68,14 +76,16 @@ class OffreController extends Controller
         return redirect()->route('offre.index');
     }
 
+    // Clôture ou réouvre une offre
     public function cloturer(Request $request, Offre $offre)
     {
-        $offre->closed = $request->input('closed',0);
+        $offre->closed = $request->input('closed', 0);
         $offre->save();
 
-        return response()->json(['success' => true , 'closed' => $offre->closed]);
+        return response()->json(['success' => true, 'closed' => $offre->closed]);
     }
 
+    // Traite la candidature à une offre
     public function postuler(Request $request, Offre $offre)
     {
         $request->validate([
@@ -97,9 +107,9 @@ class OffreController extends Controller
         return redirect()->route('offre.show', $offre);
     }
 
+    // Affiche le formulaire pour postuler à une offre
     public function showPostulerForm(Offre $offre)
     {
         return view('offre.postuler', compact('offre'));
     }
-
 }

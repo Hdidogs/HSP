@@ -9,8 +9,10 @@ class Hopital extends Model
 {
     use HasFactory;
 
+    // Spécifie le nom de la table dans la base de données
     protected $table = 'hopitaux';
 
+    // Définit les champs qui peuvent être assignés en masse
     protected $fillable = [
         'nom',
         'rue',

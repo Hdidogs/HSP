@@ -6,20 +6,20 @@ use Illuminate\Http\Request;
 
 class HopitalController extends Controller
 {
-    // Afficher la liste des hôpitaux
+    // Affiche la liste de tous les hôpitaux
     public function index()
     {
         $hopitaux = Hopital::all();
         return view('hopital.hopital-index', compact('hopitaux'));
     }
 
-    // Afficher le formulaire de création d'un nouvel hôpital
+    // Affiche le formulaire de création d'un nouvel hôpital
     public function create()
     {
         return view('hopitaux.create');
     }
 
-    // Enregistrer un nouvel hôpital dans la base de données
+    // Enregistre un nouvel hôpital dans la base de données
     public function store(Request $request)
     {
         $request->validate([
@@ -35,21 +35,21 @@ class HopitalController extends Controller
         return redirect()->route('hopitaux.index')->with('success', 'Hôpital créé avec succès.');
     }
 
-    // Afficher un hôpital spécifique
+    // Affiche les détails d'un hôpital spécifique
     public function show($id)
     {
         $hopital = Hopital::findOrFail($id);
         return view('hopitaux.show', compact('hopital'));
     }
 
-    // Afficher le formulaire d'édition d'un hôpital
+    // Affiche le formulaire d'édition d'un hôpital
     public function edit($id)
     {
         $hopital = Hopital::findOrFail($id);
         return view('hopitaux.edit', compact('hopital'));
     }
 
-    // Mettre à jour les informations d'un hôpital
+    // Met à jour les informations d'un hôpital existant
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -66,7 +66,7 @@ class HopitalController extends Controller
         return redirect()->route('hopitaux.index')->with('success', 'Hôpital mis à jour avec succès.');
     }
 
-    // Supprimer un hôpital de la base de données
+    // Supprime un hôpital de la base de données
     public function destroy($id)
     {
         $hopital = Hopital::findOrFail($id);
@@ -75,4 +75,3 @@ class HopitalController extends Controller
         return redirect()->route('hopitaux.index')->with('success', 'Hôpital supprimé avec succès.');
     }
 }
-

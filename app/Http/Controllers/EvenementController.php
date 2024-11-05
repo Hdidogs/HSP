@@ -12,10 +12,12 @@ use Carbon\Carbon;
 
 class EvenementController extends Controller
 {
+    // Affiche la liste des événements à venir
     public function index()
     {
         $userId = Auth::id();
 
+        // Récupère les événements dont la date est postérieure à hier
         $evenements = Evenement::where('date', '>', Carbon::now()->subDay())->get();
 
         foreach ($evenements as $evenement) {
@@ -25,12 +27,13 @@ class EvenementController extends Controller
         return view('evenement.index', compact('evenements'));
     }
 
-
+    // Affiche le formulaire de création d'un événement
     public function create()
     {
         return view('evenement.create');
     }
 
+    // Enregistre un nouvel événement
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -45,20 +48,22 @@ class EvenementController extends Controller
 
         $evenement = Evenement::create($validatedData);
 
+        // Crée une entrée dans la table Organisation pour lier l'événement à son créateur
         Organisation::create([
             'ref_user' => Auth::id(),
             'ref_evenement' => $evenement->id,
         ]);
 
-        // Redirect or return a response
         return redirect()->route('evenement.index')->with('status', 'Événement créé avec succès !');
     }
 
+    // Affiche le formulaire d'édition d'un événement
     public function edit(Evenement $evenement)
     {
         return view('evenement.edit', compact('evenement'));
     }
 
+    // Met à jour un événement existant
     public function update(Request $request, Evenement $evenement)
     {
         $request->validate([
@@ -76,6 +81,7 @@ class EvenementController extends Controller
         return redirect()->route('evenement.index')->with('status', 'Événement mis à jour avec succès!');
     }
 
+    // Supprime un événement et ses organisations associées
     public function destroy($id)
     {
         $evenement = Evenement::findOrFail($id);
@@ -87,10 +93,11 @@ class EvenementController extends Controller
         return redirect()->route('evenement.index')->with('status', 'Événement et organisations associées supprimés avec succès !');
     }
 
-
+    // Gère l'inscription d'un utilisateur à un événement
     public function inscription(Request $request, Evenement $evenement)
     {
         return DB::transaction(function () use ($evenement) {
+            // Vérifie si l'utilisateur est déjà inscrit
             $inscriptionExistante = Inscription::where('ref_evenement', $evenement->id)
                 ->where('ref_user', auth()->id())
                 ->first();
@@ -99,14 +106,17 @@ class EvenementController extends Controller
                 return redirect()->route('evenement.index')->with('error', 'Vous êtes déjà inscrit à cet événement.');
             }
 
+            // Vérifie s'il reste des places disponibles
             if ($evenement->nb_place <= 0) {
                 return redirect()->route('evenement.index')->with('error', 'Désolé, il n\'y a plus de places disponibles pour cet événement.');
             }
 
+            // Vérifie si l'événement n'est pas déjà passé
             if ($evenement->date < Carbon::now()) {
                 return redirect()->route('evenement.index')->with('error', 'Désolé, cet événement est déjà passé.');
             }
 
+            // Crée l'inscription et décrémente le nombre de places disponibles
             Inscription::create([
                 'ref_evenement' => $evenement->id,
                 'ref_user' => auth()->id(),
@@ -118,6 +128,7 @@ class EvenementController extends Controller
         });
     }
 
+    // Gère la désinscription d'un utilisateur à un événement
     public function desinscription(Request $request, Evenement $evenement)
     {
         return DB::transaction(function () use ($evenement) {
@@ -133,6 +144,8 @@ class EvenementController extends Controller
             return redirect()->route('evenement.index')->with('error', 'Vous n\'étiez pas inscrit à cet événement.');
         });
     }
+
+    // Affiche la liste des inscrits à un événement
     public function inscrits(Evenement $evenement)
     {
         $inscriptions = Inscription::where('ref_evenement', $evenement->id)
