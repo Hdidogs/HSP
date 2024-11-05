@@ -48,4 +48,10 @@ class Evenement extends Model
     {
         return $this->belongsTo(User::class, 'ref_user');
     }
+
+    // Nouvelle relation avec le modèle EvenementAvant
+    public function evenementAvants()
+    {
+        return $this->hasMany(EvenementAvant::class, 'ref_evenement');
+    }
 }
