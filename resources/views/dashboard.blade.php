@@ -49,44 +49,41 @@
         </div>
 
         <!-- Événements à Venir Section -->
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Événements à Venir</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                            @forelse($evenementAvants as $evenementAvant)
-                                @if($evenementAvant->evenement)
-                                    <div class="bg-white overflow-hidden shadow rounded-lg">
-                                        <div class="p-4">
-                                            <h4 class="text-md font-medium text-gray-900">
-                                                {{ $evenementAvant->evenement->titre }}</h4>
-                                            <p class="mt-2 text-sm text-gray-500">
-                                                Date:
-                                                @if($evenementAvant->evenement->date instanceof \DateTime)
-                                                    {{ $evenementAvant->evenement->date->format('d/m/Y') }}
-                                                @else
-                                                    {{ $evenementAvant->evenement->date }}
-                                                @endif
-                                            </p>
-                                            <p class="mt-2 text-sm text-gray-500">
-                                                {{ Str::limit($evenementAvant->evenement->description, 100) }}
-                                            </p>
-                                        </div>
-                                        <div class="bg-gray-50 px-4 py-3 mt-3">
-                                            <a href="{{ route('evenements.show', $evenementAvant->evenement) }}"
-                                                class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                                En savoir plus &rarr;
-                                            </a>
-                                        </div>
-                                    </div>
-                                @endif
-                            @empty
-                                <p class="text-gray-500 col-span-full">Aucun événement à venir pour le moment.</p>
-                            @endforelse
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+            <h2 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                Événements à Venir
+            </h2>
+            <div class="mt-6 grid gap-6 lg:grid-cols-4">
+                @forelse($evenementAvants as $evenementAvant)
+                    @if($evenementAvant->evenement)
+                        <div class="bg-white overflow-hidden shadow rounded-lg flex flex-col h-full">
+                            <div class="p-5 flex-grow">
+                                <h3 class="text-lg font-medium text-gray-900 mb-2 line-clamp-2 h-14">
+                                    {{ $evenementAvant->evenement->titre }}
+                                </h3>
+                                <p class="text-sm text-gray-500 mb-2">
+                                    Date:
+                                    @if($evenementAvant->evenement->date instanceof \DateTime)
+                                        {{ $evenementAvant->evenement->date->format('d/m/Y') }}
+                                    @else
+                                        {{ $evenementAvant->evenement->date }}
+                                    @endif
+                                </p>
+                                <p class="text-base text-gray-500 line-clamp-3">
+                                    {{ $evenementAvant->evenement->description }}
+                                </p>
+                            </div>
+                            <div class="bg-gray-50 px-5 py-3 mt-auto">
+                                <a href="{{ route('evenements.show', $evenementAvant->evenement) }}"
+                                    class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                                    En savoir plus &rarr;
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    @endif
+                @empty
+                    <p class="text-gray-500 col-span-full">Aucun événement à venir pour le moment.</p>
+                @endforelse
             </div>
         </div>
         <!-- Actualités Section -->
