@@ -61,6 +61,7 @@
                 </div>
             </section>
 
+
             <!-- Événements à Venir Section -->
             <section>
                 <h2 class="text-3xl font-extrabold text-gray-900 mb-8">
@@ -78,8 +79,7 @@
                                                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                                                             </path>
                                                         </svg>
-                                                        <span class="line-clamp-2">Événement {{ $index + 1 }} :
-                                                            {{ $evenementAvant->evenement->titre }}</span>
+                                                        <span class="truncate">{{ Str::limit($evenementAvant->evenement->titre, 50) }}</span>
                                                     </h3>
                                                     <p class="text-sm text-gray-500 flex items-center mb-2">
                                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -92,7 +92,7 @@
                                     : date('d/m/Y', strtotime($evenementAvant->evenement->date)) }}
                                                     </p>
                                                     <p class="text-gray-600 line-clamp-3">
-                                                        {{ $evenementAvant->evenement->description }}
+                                                        {{ Str::limit($evenementAvant->evenement->description, 150) }}
                                                     </p>
                                                 </div>
                                                 <div class="bg-gray-50 px-6 py-4 mt-auto">
