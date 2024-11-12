@@ -67,31 +67,27 @@
                 <h2 class="text-3xl font-extrabold text-gray-900 mb-8">
                     Événements à Venir
                 </h2>
-                <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+                <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                     @forelse($evenementAvants as $index => $evenementAvant)
                                 @if($evenementAvant->evenement)
-                                            <div class="bg-white overflow-hidden shadow-sm rounded-lg flex flex-col">
+                                            <div
+                                                class="bg-white overflow-hidden shadow-sm rounded-lg flex flex-col justify-between min-h-[250px]">
                                                 <div class="p-6 flex-grow">
-                                                    <h3 class="text-lg font-medium text-gray-900 flex items-center mb-2">
-                                                        <svg class="w-6 h-6 mr-2 text-indigo-500" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <h3 class="text-lg font-medium text-gray-900 flex items-center">
+                                                        <svg class="w-5 h-5 mr-2 text-indigo-500 flex-shrink-0" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                                                             </path>
                                                         </svg>
-                                                        <span class="truncate">{{ Str::limit($evenementAvant->evenement->titre, 50) }}</span>
+                                                        <span class="break-words">{{ $evenementAvant->evenement->titre }}</span>
                                                     </h3>
-                                                    <p class="text-sm text-gray-500 flex items-center mb-2">
-                                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                        </svg>
+                                                    <p class="mt-2 text-sm text-gray-500">
                                                         Publié le {{ $evenementAvant->evenement->date instanceof \DateTime
                                     ? $evenementAvant->evenement->date->format('d/m/Y')
                                     : date('d/m/Y', strtotime($evenementAvant->evenement->date)) }}
                                                     </p>
-                                                    <p class="text-gray-600 line-clamp-3">
+                                                    <p class="mt-2 text-gray-600">
                                                         {{ Str::limit($evenementAvant->evenement->description, 150) }}
                                                     </p>
                                                 </div>
