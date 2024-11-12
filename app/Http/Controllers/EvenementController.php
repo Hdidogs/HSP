@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\EvenementAvant;
 
 class EvenementController extends Controller
 {
@@ -85,15 +86,31 @@ class EvenementController extends Controller
     // Supprime un événement et ses organisations associées
     public function destroy($id)
     {
-        $evenement = Evenement::findOrFail($id);
+        try {
+            DB::beginTransaction();
 
-        Organisation::where('ref_evenement', $id)->delete();
+            $evenement = Evenement::findOrFail($id);
 
-        $evenement->delete();
+            // Supprimer les inscriptions associées
+            Inscription::where('ref_evenement', $id)->delete();
 
-        return redirect()->route('evenement.index')->with('status', 'Événement et organisations associées supprimés avec succès !');
+            // Supprimer les organisations associées
+            Organisation::where('ref_evenement', $id)->delete();
+
+            // Supprimer les evenementavant associés
+            EvenementAvant::where('ref_evenement', $id)->delete();
+
+            // Supprimer l'événement
+            $evenement->delete();
+
+            DB::commit();
+
+            return redirect()->route('evenement.index')->with('status', 'Événement et données associées supprimés avec succès !');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('evenement.index')->with('error', 'Erreur lors de la suppression de l\'événement : ' . $e->getMessage());
+        }
     }
-
     // Gère l'inscription d'un utilisateur à un événement
     public function inscription(Request $request, Evenement $evenement)
     {
