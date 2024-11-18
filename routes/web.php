@@ -72,6 +72,8 @@ Route::delete('/evenements/{evenement}/users/{user}', [EvenementController::clas
 Route::get('/evenements/{evenement}', [EvenementController::class, 'show'])->name('evenements.show');
 Route::resource('offre', OffreController::class);
 Route::get('/dashboard', [OffreAvantController::class, 'dashboard'])->name('dashboard');
+Route::get('/', [OffreAvantController::class, 'dashboard'])->name('dashboard');
+
 Route::post('/evenement/{evenement}/inscription', [EvenementController::class, 'inscription'])->name('evenement.inscription');
 Route::delete('/evenement/{evenement}/desinscription', [EvenementController::class, 'desinscription'])->name('evenement.desinscription');
 Route::get('/evenement/{evenement}', [EvenementController::class, 'show'])->name('evenement.show');
