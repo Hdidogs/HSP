@@ -162,6 +162,10 @@ class EvenementController extends Controller
             return redirect()->route('evenement.index')->with('error', 'Vous n\'étiez pas inscrit à cet événement.');
         });
     }
+    public function show(Evenement $evenement)
+    {
+        return view('evenement.show', compact('evenement'));
+    }
 
     // Affiche la liste des inscrits à un événement
     public function inscrits(Evenement $evenement)

@@ -41,7 +41,8 @@
             @if($evenements->isNotEmpty())
                 <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     @foreach($evenements as $evenement)
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg flex flex-col">
+                        <div
+                            class="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg flex flex-col">
                             <div class="flex-grow p-6">
                                 <div class="flex justify-between items-start mb-4">
                                     <h2 class="text-xl font-semibold text-gray-800">{{ $evenement->titre }}</h2>
@@ -52,26 +53,36 @@
                                 <p class="text-gray-600 mb-4">{{ Str::limit($evenement->description, 100) }}</p>
                                 <div class="space-y-2 text-sm text-gray-500">
                                     <div class="flex items-center">
-                                        <svg class="mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                                        <svg class="mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                clip-rule="evenodd" />
                                         </svg>
                                         {{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y H:i') }}
                                     </div>
                                     <div class="flex items-center">
-                                        <svg class="mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                                        <svg class="mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                                clip-rule="evenodd" />
                                         </svg>
                                         {{ $evenement->adresse }}
                                     </div>
                                     <div class="flex items-center">
-                                        <svg class="mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
+                                        <svg class="mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path
+                                                d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
                                         </svg>
                                         Requis : {{ $evenement->elementrequis }}
                                     </div>
                                     <div class="flex items-center">
-                                        <svg class="mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+                                        <svg class="mr-1.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20" fill="currentColor">
+                                            <path
+                                                d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                                         </svg>
                                         {{ $evenement->nb_place }} place(s) restante(s)
                                     </div>
@@ -101,36 +112,42 @@
                                             </button>
                                         @endif
                                     </div>
-                                    @if($evenement->date < now())
-                                        <span class="bg-gray-500 text-white font-bold py-2 px-4 rounded opacity-75">
-                                            Clôturé
-                                        </span>
-                                    @else
-                                        @if(!$evenement->isCreator)
-                                            @if($evenement->isUserInscrit(Auth::id()))
-                                                <button onclick="confirmDesinscription({{ $evenement->id }})"
-                                                    class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
-                                                    Se désinscrire
-                                                </button>
-                                            @else
-                                                <button onclick="confirmInscription({{ $evenement->id }})"
-                                                    class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
-                                                    {{ $evenement->nb_place <= 0 ? 'disabled' : '' }}>
-                                                    {{ $evenement->nb_place <= 0 ? 'Complet' : 'S\'inscrire' }}
-                                                </button>
-                                            @endif
+                                    <div class="flex space-x-2">
+                                        <a href="{{ route('evenement.show', $evenement) }}"
+                                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                                            Voir plus
+                                        </a>
+                                        @if($evenement->date < now())
+                                            <span class="bg-gray-500 text-white font-bold py-2 px-4 rounded opacity-75">
+                                                Clôturé
+                                            </span>
                                         @else
-                                            <a href="{{ route('evenement.inscrits', $evenement) }}"
-                                                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
-                                                Voir les inscrits
-                                            </a>
+                                            @if(!$evenement->isCreator)
+                                                @if($evenement->isUserInscrit(Auth::id()))
+                                                    <button onclick="confirmDesinscription({{ $evenement->id }})"
+                                                        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                                                        Se désinscrire
+                                                    </button>
+                                                @else
+                                                    <button onclick="confirmInscription({{ $evenement->id }})"
+                                                        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+                                                        {{ $evenement->nb_place <= 0 ? 'disabled' : '' }}>
+                                                        {{ $evenement->nb_place <= 0 ? 'Complet' : 'S\'inscrire' }}
+                                                    </button>
+                                                @endif
+                                            @else
+                                                <a href="{{ route('evenement.inscrits', $evenement) }}"
+                                                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                                                    Voir les inscrits
+                                                </a>
+                                            @endif
                                         @endif
-                                    @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
-                    </div>
+                </div>
             @else
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 text-center">
                     <h2 class="text-xl font-semibold text-gray-800">Aucun événement trouvé</h2>

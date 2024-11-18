@@ -15,7 +15,11 @@ class OffreController extends Controller
     public function index()
     {
         $offres = Offre::latest()->get();
-        return view('offre.index', compact('offres'));
+        $meilleuresOffres = Offre::where('closed', false)
+            ->latest()
+            ->take(3)
+            ->get();
+        return view('offre.index', compact('offres', 'meilleuresOffres'));
     }
 
     // Affiche le formulaire de création d'une offre

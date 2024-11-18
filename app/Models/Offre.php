@@ -21,13 +21,20 @@ class Offre extends Model
         return $this->belongsTo(User::class, 'ref_user');
     }
 
-    public function offre_user(){
+    public function offre_user()
+    {
         return $this->belongsToMany(User::class, 'offre_user', 'ref_offre', 'ref_user');
     }
 
     public function hasApplied(User $user)
     {
         return $this->offre_user()->where('ref_user', $user->id)->exists();
+    }
+
+    public function index()
+    {
+        $meilleuresOffres = Offre::latest()->take(3)->get();
+        return view('dashboard', compact('meilleuresOffres'));
     }
 
 

@@ -28,25 +28,28 @@
                     Nos Meilleures Offres
                 </h2>
                 <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    @foreach(range(1, 3) as $index)
-                        <div class="bg-white overflow-hidden shadow-sm rounded-lg">
-                            <div class="p-6">
+                    @forelse($meilleuresOffres as $offre)
+                        <div
+                            class="bg-white overflow-hidden shadow-sm rounded-lg flex flex-col justify-between min-h-[250px]">
+                            <div class="p-6 flex-grow">
                                 <h3 class="text-lg font-medium text-gray-900 flex items-center">
-                                    <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="w-5 h-5 mr-2 text-indigo-500 flex-shrink-0" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
                                         </path>
                                     </svg>
-                                    Offre {{ $index }}
+                                    <span class="break-words">{{ $offre->titre }}</span>
                                 </h3>
+                                <p class="mt-2 text-sm text-gray-500">
+                                    Publié le {{ $offre->created_at->format('d/m/Y') }}
+                                </p>
                                 <p class="mt-2 text-gray-600">
-                                    Description de l'offre {{ $index }}. Ceci est un exemple de contenu pour illustrer la
-                                    mise en page.
+                                    {{ Str::limit($offre->description, 150) }}
                                 </p>
                             </div>
-                            <div class="bg-gray-50 px-6 py-4">
-                                <a href="#"
+                            <div class="bg-gray-50 px-6 py-4 mt-auto">
+                                <a href="{{ route('offre.show', $offre) }}"
                                     class="text-sm font-medium text-indigo-600 hover:text-indigo-500 flex items-center">
                                     En savoir plus
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -57,10 +60,11 @@
                                 </a>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <p class="text-gray-500 col-span-full">Aucune offre disponible pour le moment.</p>
+                    @endforelse
                 </div>
             </section>
-
 
             <!-- Événements à Venir Section -->
             <section>
@@ -68,7 +72,7 @@
                     Événements à Venir
                 </h2>
                 <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    @forelse($evenementAvants as $index => $evenementAvant)
+                    @forelse($evenementAvants as $evenementAvant)
                                 @if($evenementAvant->evenement)
                                             <div
                                                 class="bg-white overflow-hidden shadow-sm rounded-lg flex flex-col justify-between min-h-[250px]">
@@ -83,16 +87,18 @@
                                                         <span class="break-words">{{ $evenementAvant->evenement->titre }}</span>
                                                     </h3>
                                                     <p class="mt-2 text-sm text-gray-500">
-                                                        Publié le {{ $evenementAvant->evenement->date instanceof \DateTime
-                                    ? $evenementAvant->evenement->date->format('d/m/Y')
-                                    : date('d/m/Y', strtotime($evenementAvant->evenement->date)) }}
+                                                        Date : {{ $evenementAvant->evenement->date
+                                    ? ($evenementAvant->evenement->date instanceof \DateTime
+                                        ? $evenementAvant->evenement->date->format('d/m/Y')
+                                        : date('d/m/Y', strtotime($evenementAvant->evenement->date)))
+                                    : 'Non spécifiée' }}
                                                     </p>
                                                     <p class="mt-2 text-gray-600">
                                                         {{ Str::limit($evenementAvant->evenement->description, 150) }}
                                                     </p>
                                                 </div>
                                                 <div class="bg-gray-50 px-6 py-4 mt-auto">
-                                                    <a href="{{ route('evenements.show', $evenementAvant->evenement) }}"
+                                                    <a href="{{ route('evenement.show', $evenementAvant->evenement) }}"
                                                         class="text-sm font-medium text-indigo-600 hover:text-indigo-500 flex items-center">
                                                         En savoir plus
                                                         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
