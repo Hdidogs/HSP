@@ -69,8 +69,6 @@ Route::get('/forum/{forum}', [ForumController::class, 'show'])->name('forum.show
 Route::delete('/evenements/{evenement}/users/{user}', [EvenementController::class, 'removeUserFromEvent'])
     ->name('evenement.removeUserFromEvent');
 
-Route::get('/', [EvenementAvantController::class, 'index'])->name('home');
-Route::get('/dashboard', [EvenementAvantController::class, 'index'])->name('dashboard');
 Route::get('/evenements/{evenement}', [EvenementController::class, 'show'])->name('evenements.show');
 Route::resource('offre', OffreController::class);
 Route::get('/dashboard', [OffreAvantController::class, 'dashboard'])->name('dashboard');

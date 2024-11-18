@@ -164,6 +164,10 @@ class EvenementController extends Controller
     }
     public function show(Evenement $evenement)
     {
+        if (Auth::user() == null) {
+            
+            return redirect('login');
+        }
         return view('evenement.show', compact('evenement'));
     }
 

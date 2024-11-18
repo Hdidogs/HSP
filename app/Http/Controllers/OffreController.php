@@ -48,6 +48,11 @@ class OffreController extends Controller
     // Affiche les détails d'une offre spécifique
     public function show(Offre $offre)
     {
+        if (Auth::user() == null) {
+
+            return redirect('login');
+        }
+
         return view('offre.show', compact('offre'));
     }
 
