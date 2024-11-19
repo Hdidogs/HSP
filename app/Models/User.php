@@ -70,4 +70,9 @@ class User extends Authenticatable
         return $this->hasMany(Inscription::class, 'ref_user');
     }
 
+    public function estAdmin()
+    {
+        return (int) $this->ref_role === 5;
+    }
+
 }

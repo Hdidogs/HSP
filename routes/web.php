@@ -17,6 +17,8 @@ use App\Http\Controllers\SpecialiteController;
 use App\Http\Controllers\EvenementAvantController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\OffreAvantController;
+use App\Http\Controllers\AdminController;
+
 
 // Route vers les offres d'emploi
 
@@ -77,3 +79,8 @@ Route::get('/', [OffreAvantController::class, 'dashboard'])->name('dashboard');
 Route::post('/evenement/{evenement}/inscription', [EvenementController::class, 'inscription'])->name('evenement.inscription');
 Route::delete('/evenement/{evenement}/desinscription', [EvenementController::class, 'desinscription'])->name('evenement.desinscription');
 Route::get('/evenement/{evenement}', [EvenementController::class, 'show'])->name('evenement.show');
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/show', [AdminController::class, 'show'])->name('admin.show');
+});
