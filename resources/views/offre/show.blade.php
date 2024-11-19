@@ -19,9 +19,12 @@
                 @if(Auth::id() !== $offre->ref_user && Auth::user()->ref_role == 2 && !$offre->hasApplied(Auth::user()))
                     <form action="{{ route('offre.postuler', $offre) }}" method="GET">
                         @csrf
+
+                        @if($offre->closed != 1)
                         <button type="submit" class="mt-4 inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                             Postuler
                         </button>
+                        @endif
                     </form>
                 @endif
                 <a href="{{ route('offre.index') }}" class="mt-4 inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Retour aux offres</a>
