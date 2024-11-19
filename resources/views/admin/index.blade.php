@@ -25,7 +25,7 @@
                             <li class="flex items-center justify-between p-2 bg-gray-50 rounded-md">
                                 <span class="font-medium">{{ $etudiant['prenom'] }} {{ $etudiant['nom'] }}</span>
                                 <a href="{{ route('admin.show') }}"
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
                                     Voir plus
                                 </a>
                             </li>
