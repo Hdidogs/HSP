@@ -118,9 +118,11 @@
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
 
-                                <x-dropdown-link href="{{ route('profile.show') }}">
+                                @if(auth()->user()->ref_role == 5)
+                                  <x-dropdown-link href="{{ route('admin.index') }}">
                                     {{ __('Panel Admin') }}
                                 </x-dropdown-link>
+                            @endif
                                 
                                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                     <x-dropdown-link href="{{ route('api-tokens.index') }}">
