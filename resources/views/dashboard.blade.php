@@ -1,9 +1,9 @@
 <x-app-layout>
     <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white animate-fade-in-up">
         <!-- Hero Section -->
-        <section class="relative overflow-hidden pb-32 lg:pb-48">
+        <section class="relative overflow-hidden pb-24 lg:pb-32">
             <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 opacity-75"></div>
-            <div class="max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8 lg:py-40 relative z-10">
+            <div class="max-w-7xl mx-auto py-24 px-4 sm:px-6 lg:px-8 lg:py-36 relative z-10">
                 <div class="text-center">
                     <h1
                         class="text-5xl font-extrabold tracking-tight sm:text-6xl md:text-7xl lg:text-8xl bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2">
+            <div class="absolute bottom-24 left-1/2 transform -translate-x-1/2">
                 <svg class="w-8 h-8 mx-auto text-white animate-bounce" fill="none" stroke-linecap="round"
                     stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
                     <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
