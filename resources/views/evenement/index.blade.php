@@ -22,7 +22,7 @@
                             fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                                clip-rule="evenodd" />
+                                clip-rule="evenodd"/>
                         </svg>
                         Créer un événement
                     </a>
@@ -34,8 +34,8 @@
                 <svg class="absolute left-3 top-2.5 text-gray-400 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd" />
+                          d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd"/>
                 </svg>
             </div>
             @if($evenements->isNotEmpty())
@@ -57,7 +57,7 @@
                                             viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd"
                                                 d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                                clip-rule="evenodd" />
+                                                clip-rule="evenodd"/>
                                         </svg>
                                         {{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y H:i') }}
                                     </div>
@@ -66,7 +66,7 @@
                                             viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd"
                                                 d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                                clip-rule="evenodd" />
+                                                clip-rule="evenodd"/>
                                         </svg>
                                         {{ $evenement->adresse }}
                                     </div>
@@ -107,7 +107,7 @@
                                                     fill="currentColor">
                                                     <path fill-rule="evenodd"
                                                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                        clip-rule="evenodd" />
+                                                        clip-rule="evenodd"/>
                                                 </svg>
                                             </button>
                                         @endif
@@ -157,6 +157,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+
         function confirmDelete(evenementId) {
             Swal.fire({
                 title: 'Êtes-vous sûr ?',
@@ -173,6 +174,7 @@
                 }
             });
         }
+
         function confirmInscription(evenementId) {
             Swal.fire({
                 title: 'Êtes-vous sûr ?',
@@ -189,6 +191,7 @@
                 }
             });
         }
+
         function confirmDesinscription(evenementId) {
             Swal.fire({
                 title: 'Êtes-vous sûr ?',
@@ -205,6 +208,7 @@
                 }
             });
         }
+
         document.getElementById('searchInput').addEventListener('input', function () {
             var searchTerm = this.value.toLowerCase();
             var eventCards = document.querySelectorAll('.grid > div');
@@ -218,7 +222,9 @@
                 }
             });
         });
+
     </script>
+
     @foreach($evenements as $evenement)
         <form id="delete-form-{{ $evenement->id }}" action="{{ route('evenement.destroy', $evenement) }}" method="POST"
             style="display: none;">
@@ -235,4 +241,5 @@
             @method('DELETE')
         </form>
     @endforeach
+
 </x-app-layout>
