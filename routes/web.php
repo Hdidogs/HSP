@@ -4,6 +4,7 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\HopitalController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActiviteController;
@@ -66,7 +67,10 @@ Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->nam
 Route::post('/messages/{message}/upvote', [MessageController::class, 'upvote'])->name('messages.upvote');
 Route::post('/messages/{message}/downvote', [MessageController::class, 'downvote'])->name('messages.downvote');
 
+Route::post('reply', [ReplyController::class, 'store'])->name('reply.store');
+
 Route::get('/forum/{forum}', [ForumController::class, 'show'])->name('forum.show');
+Route::get('/forum/{forum}/{message}', [ReplyController::class, 'show'])->name('forum.reply.show');
 
 Route::delete('/evenements/{evenement}/users/{user}', [EvenementController::class, 'removeUserFromEvent'])
     ->name('evenement.removeUserFromEvent');
