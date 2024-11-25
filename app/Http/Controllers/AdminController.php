@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,15 +13,30 @@ class AdminController extends Controller
             abort(403, 'Accès non autorisé.');
         }
 
-        return view('admin.index');
+        $users = User::all();
+        return view('admin.index', compact('users'));
     }
 
-    public function show()
+    public function show($id)
     {
         if (!auth()->check() || !auth()->user()->estAdmin()) {
             abort(403, 'Accès non autorisé.');
         }
 
-        return view('admin.show');
+        $user = User::findOrFail($id);
+        return view('admin.show', compact('user'));
+    }
+
+    public function cancelValidation($id)
+    {
+        if (!auth()->check() || !auth()->user()->estAdmin()) {
+            abort(403, 'Accès non autorisé.');
+        }
+
+        $user = User::findOrFail($id);
+        // Logique pour annuler la validation
+        // Par exemple : $user->validated = false; $user->save();
+
+        return redirect()->back()->with('success', 'Validation annulée avec succès.');
     }
 }

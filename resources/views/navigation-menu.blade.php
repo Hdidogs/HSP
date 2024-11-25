@@ -111,7 +111,7 @@
 
                             <x-slot name="content">
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    {{ __('Manage Account') }}
+                                    {{ __('Gérer le compte') }}
                                 </div>
 
                                 <x-dropdown-link href="{{ route('profile.show') }}">
@@ -137,7 +137,7 @@
 
                                     <x-dropdown-link href="{{ route('logout') }}"
                                                      @click.prevent="$root.submit();">
-                                        {{ __('Log Out') }}
+                                        {{ __('Déconnexion') }}
                                     </x-dropdown-link>
                                 </form>
                             </x-slot>
@@ -146,12 +146,12 @@
             </div>
             @else
                 <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
-                    Log in
+                    Connexion
                 </x-nav-link>
 
                 @if (Route::has('register'))
                     <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
-                        Register
+                        Inscription
                     </x-nav-link>
                 @endif
             @endauth
