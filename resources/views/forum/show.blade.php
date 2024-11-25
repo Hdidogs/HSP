@@ -8,9 +8,7 @@
                             <h1
                                 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
                                 {{ $forum->nom }}</h1>
-                            <p class="mt-2 text-sm text-gray-600">Créé par <span
-                                    class="font-medium text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-6">{{ $forum->user->nom }}</span></p>
-                        </div>
+                            </div>
                         <a href="{{ route('forum.index') }}"
                             class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-150 ease-in-out">
                             <svg class="mr-2 -ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
