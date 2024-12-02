@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class AdminController extends Controller
         }
 
         $users = User::all();
-        return view('admin.index', compact('users'));
+        $tickets = Ticket::all();
+        return view('admin.index', compact('users', 'tickets'));
     }
 
     public function show($id)

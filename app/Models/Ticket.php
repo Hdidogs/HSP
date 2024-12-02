@@ -17,4 +17,19 @@ class Ticket extends Model
         'ref_gestionnaire',
         'date',
     ];
+
+    public function importance()
+    {
+        return $this->belongsTo(Importance::class, 'ref_importance');
+    }
+
+    public function gestionnaire()
+    {
+        return $this->belongsTo(User::class, 'ref_gestionnaire');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'ref_user');
+    }
 }
