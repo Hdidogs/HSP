@@ -87,4 +87,7 @@ Route::get('/evenement/{evenement}', [EvenementController::class, 'show'])->name
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/show', [AdminController::class, 'show'])->name('admin.show');
+    Route::get('/admin/{id}', [AdminController::class, 'show'])->name('admin.show');
+    Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
+
 });

@@ -11,8 +11,8 @@
                 <div class="p-6 sm:p-8">
                     @php
                         $etudiant = [
-                            'nom' => 'Dupont',
-                            'prenom' => 'Jean',
+                            'nom' => $user->nom,
+                            'prenom' => $user->prenom,
                             'age' => 22,
                             'sexe' => 'Homme',
                             'adresse' => '123 Rue de la Paix, 75000 Paris',
