@@ -118,12 +118,16 @@
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
 
+                                <x-dropdown-link href="{{ route('ticket.index') }}">
+                                    {{ __('Mes Tickets') }}
+                                </x-dropdown-link>
+
                                 @if(auth()->user()->ref_role == 5)
                                   <x-dropdown-link href="{{ route('admin.index') }}">
                                     {{ __('Panel Admin') }}
                                 </x-dropdown-link>
                             @endif
-                                
+
                                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                     <x-dropdown-link href="{{ route('api-tokens.index') }}">
                                         {{ __('API Tokens') }}
@@ -206,6 +210,16 @@
                         <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                             {{ __('Profile') }}
                         </x-responsive-nav-link>
+
+                        <x-responsive-nav-link href="{{ route('ticket.index') }}" :active="request()->routeIs('ticket.index')">
+                            {{ __('Mes Tickets') }}
+                        </x-responsive-nav-link>
+
+                        @if(auth()->user()->ref_role == 5)
+                                <x-responsive-nav-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.index')">
+                                {{ __('Panel Admin') }}
+                                </x-responsive-nav-link>
+                        @endif
 
                         @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                             <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">

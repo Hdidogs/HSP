@@ -89,5 +89,4 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/show', [AdminController::class, 'show'])->name('admin.show');
     Route::get('/admin/{id}', [AdminController::class, 'show'])->name('admin.show');
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
-
 });
