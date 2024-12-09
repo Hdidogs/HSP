@@ -74,8 +74,18 @@ class TicketController extends Controller
     public function destroy($id)
     {
         $ticket = Ticket::findOrFail($id);
+
+        // Delete associated messages
+        MessageTicket::where('ref_ticket', $id)->delete();
+
+        // Delete the ticket
         $ticket->delete();
-        return redirect()->route('ticket.index');
+
+        if (Auth::user()->role == 5) {
+            return redirect()->route('admin.index');
+        } else {
+            return redirect()->route('ticket.index');
+        }
     }
 
     // Affiche les détails d'un ticket spécifique

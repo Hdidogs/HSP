@@ -91,9 +91,5 @@
             var chatMessages = document.getElementById('chat-messages');
             chatMessages.scrollTop = chatMessages.scrollHeight;
         });
-
-        function redirectToRegister(messageId, forumId) {
-            window.location.href = "{{ url('forum') }}/" + forumId + "/" + messageId;
-        }
     </script>
 </x-app-layout>

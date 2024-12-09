@@ -385,7 +385,7 @@
                                                               clip-rule="evenodd" />
                                                     </svg>
                                                 </a>
-                                                <button onclick="deleteUser({{ $ticket->id }})"
+                                                <button onclick="deleteTicket({{ $ticket->id }})"
                                                         class="text-red-600 hover:text-red-900">
                                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd"
@@ -633,6 +633,10 @@
     </div>
 
     <script>
+        function deleteTicket(ticketId) {
+            window.location.href = "ticket/destroy/" + ticketId;
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             const tabs = document.querySelectorAll('.tab-button');
             const contents = document.querySelectorAll('.tab-content');

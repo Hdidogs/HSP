@@ -37,7 +37,7 @@ Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.st
 Route::get('ticket/{ticket}/edit', [TicketController::class, 'edit'])->name('ticket.edit');
 Route::put('ticket/{ticket}', [TicketController::class, 'update'])->name('ticket.update');
 Route::get('ticket/{ticket}/show', [TicketController::class, 'show'])->name('ticket.show');
-Route::get('ticket/destroy', [TicketController::class, 'destroy'])->name('ticket.destroy');
+Route::get('ticket/destroy/{ticket}', [TicketController::class, 'destroy'])->name('ticket.destroy');
 use App\Http\Controllers\MessagesTicket;
 
 // Routes for MessagesTicket
