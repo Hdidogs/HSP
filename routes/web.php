@@ -31,7 +31,13 @@ Route::post('/offres/{offre}/postuler', [OffreController::class, 'postuler'])->n
 Route::put('/offres/{offre}/cloturer', [OffreController::class, 'cloturer'])->name('offre.cloturer');
 Route::resource('specialite', SpecialiteController::class);
 Route::resource('gestionnaire', GestionnaireController::class);
-Route::resource('ticket', TicketController::class);
+Route::get('ticket', [TicketController::class, "ticketByUser"])->name('ticket.index');
+Route::get('ticket/create', [TicketController::class, 'create'])->name('ticket.create');
+Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.store');
+Route::get('ticket/{ticket}/edit', [TicketController::class, 'edit'])->name('ticket.edit');
+Route::put('ticket/{ticket}', [TicketController::class, 'update'])->name('ticket.update');
+Route::get('ticket/{ticket}/show', [TicketController::class, 'show'])->name('ticket.show');
+Route::get('ticket/destroy', [TicketController::class, 'destroy'])->name('ticket.destroy');
 Route::resource('hopitaux', HopitalController::class);
 Route::resource('post', PostController::class);
 Route::resource('forum', ForumController::class);

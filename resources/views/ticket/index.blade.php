@@ -10,7 +10,6 @@
                 <th class="py-2">Description</th>
                 <th class="py-2">Utilisateur</th>
                 <th class="py-2">Importance</th>
-                <th class="py-2">Gestionnaire</th>
                 <th class="py-2">Date</th>
                 <th class="py-2">Actions</th>
             </tr>
@@ -20,9 +19,8 @@
                 <tr>
                     <td class="py-2">{{ $ticket->objet }}</td>
                     <td class="py-2">{{ $ticket->description }}</td>
-                    <td class="py-2">{{ $ticket->user->name }}</td>
-                    <td class="py-2">{{ $ticket->importance->name }}</td>
-                    <td class="py-2">{{ $ticket->gestionnaire->name }}</td>
+                    <td class="py-2">{{ $ticket->user->nom }}</td>
+                    <td class="py-2">{{ $ticket->importance->libelle }}</td>
                     <td class="py-2">{{ $ticket->date }}</td>
                     <td class="py-2">
                         <a href="{{ route('ticket.show', $ticket->id) }}" class="text-blue-500">Voir</a>

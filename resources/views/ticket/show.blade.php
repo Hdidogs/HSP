@@ -5,9 +5,8 @@
         <div class="mt-4">
             <h2 class="text-lg">Objet: {{ $ticket->objet }}</h2>
             <p>Description: {{ $ticket->description }}</p>
-            <p>Utilisateur: {{ $ticket->user->name }}</p>
-            <p>Importance: {{ $ticket->importance->name }}</p>
-            <p>Gestionnaire: {{ $ticket->gestionnaire->name }}</p>
+            <p>Utilisateur: {{ $ticket->user->nom }}</p>
+            <p>Importance: {{ $ticket->importance->libelle }}</p>
             <p>Date: {{ $ticket->date }}</p>
         </div>
 

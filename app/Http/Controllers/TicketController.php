@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Importance;
 use App\Models\Gestionnaire;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -17,13 +18,16 @@ class TicketController extends Controller
         return view('ticket.index', compact('tickets'));
     }
 
-    // Affiche le formulaire de création d'un nouveau ticket
-    public function create()
+    public function ticketByUser()
     {
-        $users = User::all();
+        $tickets = Ticket::where('ref_user', Auth::user()->id)->get();
+        return view('ticket.index', compact('tickets'));
+    }
+
+    // Affiche le formulaire de création d'un nouveau ticket
+    public function create() {
         $importances = Importance::all();
-        $gestionnaires = Gestionnaire::all();
-        return view('ticket.create', compact('users', 'importances', 'gestionnaires'));
+        return view('ticket.create', compact('importances'));
     }
 
     // Enregistre un nouveau ticket dans la base de données
@@ -34,7 +38,6 @@ class TicketController extends Controller
             'description' => 'required|string',
             'ref_user' => 'required|exists:users,id',
             'ref_importance' => 'required|exists:importances,id',
-            'ref_gestionnaire' => 'required|exists:gestionnaires,id',
             'date' => 'required|date',
         ]);
 
@@ -46,10 +49,8 @@ class TicketController extends Controller
     public function edit($id)
     {
         $ticket = Ticket::findOrFail($id);
-        $users = User::all();
         $importances = Importance::all();
-        $gestionnaires = Gestionnaire::all();
-        return view('tickets.edit', compact('ticket', 'users', 'importances', 'gestionnaires'));
+        return view('ticket.edit', compact('ticket', 'importances'));
     }
 
     // Met à jour un ticket existant dans la base de données
@@ -60,7 +61,6 @@ class TicketController extends Controller
             'description' => 'required|string',
             'ref_user' => 'required|exists:users,id',
             'ref_importance' => 'required|exists:importances,id',
-            'ref_gestionnaire' => 'required|exists:gestionnaires,id',
             'date' => 'required|date',
         ]);
 

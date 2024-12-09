@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tickets', function (Blueprint $table) {
+        Schema::create('messagesticket', function (Blueprint $table) {
             $table->id();
-            $table->string('objet');
-            $table->text('description');
+            $table->string('libelle');
             $table->foreignId('ref_user')->constrained('users');
-            $table->foreignId('ref_importance')->constrained('importances');
-            $table->foreignId('ref_gestionnaire')->nullable()->constrained('users');
-            $table->date('date');
+            $table->foreignId('ref_ticket')->constrained('tickets');
             $table->timestamps();
         });
 
