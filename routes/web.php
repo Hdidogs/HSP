@@ -38,6 +38,11 @@ Route::get('ticket/{ticket}/edit', [TicketController::class, 'edit'])->name('tic
 Route::put('ticket/{ticket}', [TicketController::class, 'update'])->name('ticket.update');
 Route::get('ticket/{ticket}/show', [TicketController::class, 'show'])->name('ticket.show');
 Route::get('ticket/destroy', [TicketController::class, 'destroy'])->name('ticket.destroy');
+use App\Http\Controllers\MessagesTicket;
+
+// Routes for MessagesTicket
+Route::post('messagesticket/store', [MessagesTicket::class, 'store'])->name('messagesticket.store');
+
 Route::resource('hopitaux', HopitalController::class);
 Route::resource('post', PostController::class);
 Route::resource('forum', ForumController::class);

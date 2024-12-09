@@ -376,7 +376,7 @@
                                         <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->id }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">
                                             <div class="flex items-center space-x-3">
-                                                <a href="{{ route('admin.show', ['id' => $user->id]) }}"
+                                                <a href="{{ route('ticket.show', ['ticket' => $ticket->id]) }}"
                                                    class="text-indigo-600 hover:text-indigo-900">
                                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -385,7 +385,7 @@
                                                               clip-rule="evenodd" />
                                                     </svg>
                                                 </a>
-                                                <button onclick="deleteUser({{ $user->id }})"
+                                                <button onclick="deleteUser({{ $ticket->id }})"
                                                         class="text-red-600 hover:text-red-900">
                                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd"

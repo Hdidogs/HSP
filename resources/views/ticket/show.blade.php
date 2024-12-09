@@ -29,9 +29,21 @@
                         <h3 class="text-lg font-semibold mb-2">Chat</h3>
                         <div id="chat-messages" class="bg-gray-100 h-64 overflow-y-auto p-4 rounded-lg mb-4">
                             <!-- Les messages seront ajoutés ici dynamiquement -->
+                            @foreach($messages as $message)
+                                    <div class="bg-white p-2 rounded-lg shadow mb-2 text-sm">
+                                    <div>
+                                        <p class="font-semibold">{{ $message->user->nom . " " . $message->user->prenom }}</p>
+                                        <p class="text-sm text-gray-600">{{ $message->created_at->diffForHumans() }}</p>
+                                    </div>
+                                    {{ $message->libelle }}
+                                </div>
+                            @endforeach
                         </div>
-                        <form id="chat-form" class="flex">
-                            <input type="text" id="chat-input"
+                        <form method="POST" action="{{ route('messagesticket.store') }}" id="chat-form" class="flex">
+                            @csrf
+                            <input type="hidden" name="ref_user" value="{{ Auth::user()->id }}">
+                            <input type="hidden" name="ref_ticket" value="{{ $ticket->id }}">
+                            <input type="text" name="libelle" id="chat-input"
                                 class="flex-grow px-3 py-2 border rounded-l-lg focus:outline-none focus:border-blue-500"
                                 placeholder="Écrivez votre message...">
                             <button type="submit"
@@ -65,4 +77,23 @@
             </div>
         </div>
     </div>
+    <style>
+        #chat-messages::-webkit-scrollbar {
+            display: none;
+        }
+        #chat-messages {
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+
+        function redirectToRegister(messageId, forumId) {
+            window.location.href = "{{ url('forum') }}/" + forumId + "/" + messageId;
+        }
+    </script>
 </x-app-layout>
