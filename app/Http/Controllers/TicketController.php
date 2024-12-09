@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MessageTicket;
 use App\Models\Ticket;
 use App\Models\User;
 use App\Models\Importance;
@@ -81,6 +82,7 @@ class TicketController extends Controller
     public function show($id)
     {
         $ticket = Ticket::findOrFail($id);
-        return view('ticket.show', compact('ticket'));
+        $messages = MessageTicket::where('ref_ticket', $id)->get();
+        return view('ticket.show', compact('ticket', $messages));
     }
 }
