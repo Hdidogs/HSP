@@ -83,6 +83,6 @@ class TicketController extends Controller
     {
         $ticket = Ticket::findOrFail($id);
         $messages = MessageTicket::where('ref_ticket', $id)->get();
-        return view('ticket.show', compact('ticket', $messages));
+        return view('ticket.show', compact('ticket', 'messages'));
     }
 }

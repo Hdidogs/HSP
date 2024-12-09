@@ -1,91 +1,68 @@
 <x-app-layout>
-    <div class="container mx-auto mt-4">
-        <h1 class="text-2xl font-semibold">Détails du ticket</h1>
-
-        <div class="mt-4">
-            <h2 class="text-lg">Objet: {{ $ticket->objet }}</h2>
-            <p>Description: {{ $ticket->description }}</p>
-            <p>Utilisateur: {{ $ticket->user->nom }}</p>
-            <p>Importance: {{ $ticket->importance->libelle }}</p>
-            <p>Date: {{ $ticket->date }}</p>
-        </div>
-
-        <div class="mt-4">
-            <a href="{{ route('ticket.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Retour à la liste</a>
-            <a href="{{ route('ticket.edit', $ticket->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded">Modifier</a>
-            <form action="{{ route('ticket.destroy', $ticket->id) }}" method="POST" class="inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Supprimer</button>
-            </form>
-        </div>
-
-
-        <div id="chat-messages" class="space-y-4 h-96 overflow-y-auto mb-6 p-4 bg-white rounded-lg shadow-inner">
-            @foreach($messages as $message)
-                @if(\App\Models\Reply::where("ref_reply", $message->id)->count() > 0)
-                @else
-                    <div class="bg-gray-100 p-4 rounded-lg" onclick="redirectToRegister({{ $message->id }}, {{ $forum->id }})">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="font-semibold">{{ $message->sender->nom . " " . $message->sender->prenom }}</p>
-                                <p class="text-sm text-gray-600">{{ $message->created_at->diffForHumans() }}</p>
-                            </div>
-                            <span class="text-sm font-medium text-gray-500 bg-white rounded-full px-3 py-1">
-                                <div class="flex space-x-2">
-                                    <a href="{{ route('forum.edit', $forum->id) }}"
-                                       class="text-yellow-600 hover:text-yellow-800 transition duration-300 ease-in-out">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                             fill="currentColor">
-                                            <path
-                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                        </svg>
-                                    </a>
-                                    <form id="delete-form-{{ $forum->id }}"
-                                          action="{{ route('forum.destroy', $forum->id) }}" method="POST"
-                                          class="inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button"
-                                                class="text-red-600 hover:text-red-800 transition duration-300 ease-in-out"
-                                                onclick="confirmDelete('delete-form-{{ $forum->id }}')">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                 fill="currentColor">
-                                                <path fill-rule="evenodd"
-                                                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                      clip-rule="evenodd" />
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </div>
-                            </span>
-                        </div>
-                        <div class="flex justify-between items-start mb-2">
-                            <p class="mt-2 message-content">{{ $message->libelle }}</p>
-                        </div>
-                    </div>
-                @endif
-            @endforeach
-        </div>
-        <form method="POST" action="{{ route('messages.store') }}" id="chat-form" class="mt-6">
-            @csrf
-            <input type="hidden" name="ref_user" value="{{ Auth::user()->id }}">
-            <input type="hidden" name="ref_forum" value="{{ $forum->id }}">
-            <div class="flex rounded-full shadow-sm">
-                <input type="text" name="libelle" id="chat-input"
-                       class="flex-1 min-w-0 block w-full px-4 py-3 rounded-l-full text-gray-900 border border-purple-200 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-                       placeholder="Écrivez votre message...">
-                <button type="submit"
-                        class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-r-full text-white bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-150 ease-in-out">
-                    <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd"
-                              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                              clip-rule="evenodd" />
-                    </svg>
-                    Envoyer
-                </button>
+    <div class="container mx-auto mt-8 px-4">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="py-4 px-6 bg-gray-100 border-b">
+                <h1 class="text-2xl font-bold text-gray-800">Détails du ticket</h1>
             </div>
-        </form>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h2 class="text-xl font-semibold mb-2">{{ $ticket->objet }}</h2>
+                        <p class="text-gray-600 mb-4">{{ $ticket->description }}</p>
+                        <p class="text-sm text-gray-500">
+                            <span class="font-semibold">Utilisateur:</span> {{ $ticket->user->nom }}
+                        </p>
+                        <p class="text-sm text-gray-500">
+                            <span class="font-semibold">Importance:</span>
+                            <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                {{ $ticket->importance->libelle === 'Haute' ? 'bg-red-100 text-red-800' :
+    ($ticket->importance->libelle === 'Moyenne' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800') }}">
+                                {{ $ticket->importance->libelle }}
+                            </span>
+                        </p>
+                        <p class="text-sm text-gray-500">
+                            <span class="font-semibold">Date:</span> {{ $ticket->date }}
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Chat</h3>
+                        <div id="chat-messages" class="bg-gray-100 h-64 overflow-y-auto p-4 rounded-lg mb-4">
+                            <!-- Les messages seront ajoutés ici dynamiquement -->
+                        </div>
+                        <form id="chat-form" class="flex">
+                            <input type="text" id="chat-input"
+                                class="flex-grow px-3 py-2 border rounded-l-lg focus:outline-none focus:border-blue-500"
+                                placeholder="Écrivez votre message...">
+                            <button type="submit"
+                                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-r-lg transition duration-300 ease-in-out">
+                                Envoyer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-between">
+                    <a href="{{ route('ticket.index') }}"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        Retour à la liste
+                    </a>
+                    <div>
+                        <a href="{{ route('ticket.edit', $ticket->id) }}"
+                            class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mr-2">
+                            Modifier
+                        </a>
+                        <form action="{{ route('ticket.destroy', $ticket->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out"
+                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce ticket ?')">
+                                Supprimer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </x-app-layout>
