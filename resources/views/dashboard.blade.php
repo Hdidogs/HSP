@@ -87,7 +87,7 @@
                 </h2>
                 <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
                     @forelse($evenementAvants as $evenementAvant)
-                                @if($evenementAvant->evenement)
+                                @if($evenementAvant)
                                             <div
                                                 class="bg-gray-800 overflow-hidden rounded-3xl flex flex-col justify-between min-h-[350px] transform transition duration-300 hover:scale-105 hover:shadow-2xl">
                                                 <div class="p-8 flex-grow">
@@ -98,21 +98,21 @@
                                                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
                                                             </path>
                                                         </svg>
-                                                        <span class="break-words">{{ $evenementAvant->evenement->titre }}</span>
+                                                        <span class="break-words">{{ $evenementAvant->titre }}</span>
                                                     </h3>
                                                     <p class="text-sm text-gray-400 mb-4">
-                                                        Date : {{ $evenementAvant->evenement->date
-                                    ? ($evenementAvant->evenement->date instanceof \DateTime
-                                        ? $evenementAvant->evenement->date->format('d/m/Y')
-                                        : date('d/m/Y', strtotime($evenementAvant->evenement->date)))
+                                                        Date : {{ $evenementAvant->date
+                                    ? ($evenementAvant->date instanceof \DateTime
+                                        ? $evenementAvant->date->format('d/m/Y')
+                                        : date('d/m/Y', strtotime($evenementAvant->date)))
                                     : 'Non spécifiée' }}
                                                     </p>
                                                     <p class="text-gray-300">
-                                                        {{ Str::limit($evenementAvant->evenement->description, 150) }}
+                                                        {{ Str::limit($evenementAvant->description, 150) }}
                                                     </p>
                                                 </div>
                                                 <div class="bg-gray-700 px-8 py-4 mt-auto">
-                                                    <a href="{{ route('evenement.show', $evenementAvant->evenement) }}"
+                                                    <a href="{{ route('evenement.show', $evenementAvant) }}"
                                                         class="text-sm font-medium text-green-400 hover:text-green-300 flex items-center justify-between transition duration-300">
                                                         <span>En savoir plus</span>
                                                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"

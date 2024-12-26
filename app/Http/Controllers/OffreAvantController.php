@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Evenement;
 use App\Models\Offre;
 use App\Models\EvenementAvant;
 use Illuminate\Http\Request;
@@ -15,10 +16,7 @@ class OffreAvantController extends Controller
             ->take(3)
             ->get();
 
-        $evenementAvants = EvenementAvant::with('evenement')
-            ->whereHas('evenement', function ($query) {
-                $query->where('date', '>=', now());
-            })
+        $evenementAvants = Evenement::where('date', '>', now())
             ->take(3)
             ->get();
 
