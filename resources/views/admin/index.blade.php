@@ -373,7 +373,7 @@
                                         <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->description }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">
                                             {{ $ticket->date }}</td>
-                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->id }}</td>
+                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->importance->libelle }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">
                                             <div class="flex items-center space-x-3">
                                                 <a href="{{ route('ticket.show', ['ticket' => $ticket->id]) }}"
@@ -452,7 +452,7 @@
                                         <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->description }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">
                                             {{ $ticket->date }}</td>
-                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->id }}</td>
+                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->importance->libelle }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">
                                             <div class="flex items-center space-x-3">
                                                 <a href="{{ route('ticket.show', ['ticket' => $ticket->id]) }}"
@@ -530,7 +530,7 @@
                                         <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->description }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">
                                             {{ $ticket->date }}</td>
-                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->id }}</td>
+                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->importance->libelle }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">
                                             <div class="flex items-center space-x-3">
                                                 <a href="{{ route('ticket.show', ['ticket' => $ticket->id]) }}"
