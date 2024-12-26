@@ -31,6 +31,20 @@ class TicketController extends Controller
         return view('ticket.create', compact('importances'));
     }
 
+    public function close($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        $ticket->update(['fin' => 1]);
+        return redirect()->route('ticket.index');
+    }
+
+    public function open($id)
+    {
+        $ticket = Ticket::findOrFail($id);
+        $ticket->update(['fin' => 0]);
+        return redirect()->route('ticket.index');
+    }
+
     // Enregistre un nouveau ticket dans la base de données
     public function store(Request $request)
     {

@@ -59,6 +59,17 @@
                         Retour à la liste
                     </a>
                     <div>
+                        @if($ticket->fin)
+                            <a href="{{ route('ticket.open', $ticket->id) }}"
+                               class="bg-green-600 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mr-2">
+                                Réouvrir
+                            </a>
+                        @else
+                            <a href="{{ route('ticket.close', $ticket->id) }}"
+                               class="bg-red-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mr-2">
+                                Clôre
+                            </a>
+                        @endif
                         <a href="{{ route('ticket.edit', $ticket->id) }}"
                             class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mr-2">
                             Modifier

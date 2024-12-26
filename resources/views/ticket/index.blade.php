@@ -34,7 +34,7 @@
                                         <td class="py-4 px-4">{{ $ticket->user->nom }}</td>
                                         <td class="py-4 px-4">
                                             <span
-                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                                 {{ $ticket->importance->libelle === 'Haute' ? 'bg-red-100 text-red-800' :
                         ($ticket->importance->libelle === 'Moyenne' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800') }}">
                                                 {{ $ticket->importance->libelle }}
@@ -42,6 +42,13 @@
                                         </td>
                                         <td class="py-4 px-4">{{ $ticket->date }}</td>
                                         <td class="py-4 px-4">
+                                            @if($ticket->fin)
+                                                <a href="{{ route('ticket.open', $ticket->id) }}"
+                                                   class="text-green-600 hover:text-blue-900 mr-2">Réouvrir</a>
+                                            @else
+                                                <a href="{{ route('ticket.close', $ticket->id) }}"
+                                                   class="text-red-500 hover:text-blue-900 mr-2">Clôre</a>
+                                            @endif
                                             <a href="{{ route('ticket.show', $ticket->id) }}"
                                                 class="text-blue-600 hover:text-blue-900 mr-2">Voir</a>
                                             <a href="{{ route('ticket.edit', $ticket->id) }}"

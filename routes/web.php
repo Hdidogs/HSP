@@ -32,6 +32,9 @@ Route::put('/offres/{offre}/cloturer', [OffreController::class, 'cloturer'])->na
 Route::resource('specialite', SpecialiteController::class);
 Route::resource('gestionnaire', GestionnaireController::class);
 Route::get('ticket', [TicketController::class, "ticketByUser"])->name('ticket.index');
+Route::get('ticket/close/{ticket}', [TicketController::class, 'close'])->name('ticket.close');
+Route::get('ticket/open/{ticket}', [TicketController::class, 'open'])->name('ticket.open');
+
 Route::get('ticket/create', [TicketController::class, 'create'])->name('ticket.create');
 Route::post('ticket/store', [TicketController::class, 'store'])->name('ticket.store');
 Route::get('ticket/{ticket}/edit', [TicketController::class, 'edit'])->name('ticket.edit');
