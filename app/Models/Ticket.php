@@ -14,18 +14,13 @@ class Ticket extends Model
         'description',
         'ref_user',
         'ref_importance',
-        'ref_gestionnaire',
+        'fin',
         'date',
     ];
 
     public function importance()
     {
         return $this->belongsTo(Importance::class, 'ref_importance');
-    }
-
-    public function gestionnaire()
-    {
-        return $this->belongsTo(User::class, 'ref_gestionnaire');
     }
 
     public function user()

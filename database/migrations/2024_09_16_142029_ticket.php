@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->foreignId('ref_user')->constrained('users');
             $table->foreignId('ref_importance')->constrained('importances');
-            $table->foreignId('ref_gestionnaire')->nullable()->constrained('users');
+            $table->boolean('fin')->default(false);
             $table->date('date');
             $table->timestamps();
         });

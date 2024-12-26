@@ -366,7 +366,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($tickets as $ticket)
+                                @foreach($tickets->where('fin', false) as $ticket)
                                     <tr>
                                         <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->id }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->objet }}</td>
@@ -391,15 +391,6 @@
                                                         <path fill-rule="evenodd"
                                                               d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                                               clip-rule="evenodd" />
-                                                    </svg>
-                                                </button>
-                                                <button onclick="openContactModal('{{ $user->email }}')"
-                                                        class="text-green-600 hover:text-green-900">
-                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path
-                                                            d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                        <path
-                                                            d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                                                     </svg>
                                                 </button>
                                             </div>
@@ -454,18 +445,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($users as $user)
+                                @foreach($tickets as $ticket)
                                     <tr>
-                                        <td class="border-b border-gray-200 px-6 py-4">{{ $user->id }}</td>
-                                        <td class="border-b border-gray-200 px-6 py-4">{{ $user->nom }}
-                                            {{ $user->prenom }}</td>
-                                        <td class="border-b border-gray-200 px-6 py-4">{{ $user->email }}</td>
-                                        <td class="border-b border-gray-200 px-6 py-4">{{ $user->email }}</td>
+                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->id }}</td>
+                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->objet }}</td>
+                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->description }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">
-                                            {{ $user->created_at->format('Y-m-d') }}</td>
+                                            {{ $ticket->date }}</td>
+                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->id }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">
                                             <div class="flex items-center space-x-3">
-                                                <a href="{{ route('admin.show', ['id' => $user->id]) }}"
+                                                <a href="{{ route('ticket.show', ['ticket' => $ticket->id]) }}"
                                                    class="text-indigo-600 hover:text-indigo-900">
                                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -474,21 +464,12 @@
                                                               clip-rule="evenodd" />
                                                     </svg>
                                                 </a>
-                                                <button onclick="deleteUser({{ $user->id }})"
+                                                <button onclick="deleteTicket({{ $ticket->id }})"
                                                         class="text-red-600 hover:text-red-900">
                                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd"
                                                               d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                                               clip-rule="evenodd" />
-                                                    </svg>
-                                                </button>
-                                                <button onclick="openContactModal('{{ $user->email }}')"
-                                                        class="text-green-600 hover:text-green-900">
-                                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path
-                                                            d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                                        <path
-                                                            d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                                                     </svg>
                                                 </button>
                                             </div>
@@ -542,18 +523,17 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($users->whereNotNull('email_verified_at') as $user)
+                                @foreach($tickets->where('fin', true) as $ticket)
                                     <tr>
-                                        <td class="border-b border-gray-200 px-6 py-4">{{ $user->id }}</td>
-                                        <td class="border-b border-gray-200 px-6 py-4">{{ $user->nom }}
-                                            {{ $user->prenom }}</td>
-                                        <td class="border-b border-gray-200 px-6 py-4">{{ $user->email }}</td>
-                                        <td class="border-b border-gray-200 px-6 py-4">{{ $user->email }}</td>
+                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->id }}</td>
+                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->objet }}</td>
+                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->description }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">
-                                            {{ $user->created_at->format('Y-m-d') }}</td>
+                                            {{ $ticket->date }}</td>
+                                        <td class="border-b border-gray-200 px-6 py-4">{{ $ticket->id }}</td>
                                         <td class="border-b border-gray-200 px-6 py-4">
                                             <div class="flex items-center space-x-3">
-                                                <a href="{{ route('admin.show', ['id' => $user->id]) }}"
+                                                <a href="{{ route('ticket.show', ['ticket' => $ticket->id]) }}"
                                                    class="text-indigo-600 hover:text-indigo-900">
                                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -562,11 +542,11 @@
                                                               clip-rule="evenodd" />
                                                     </svg>
                                                 </a>
-                                                <button onclick="cancelValidation({{ $user->id }})"
-                                                        class="text-yellow-600 hover:text-yellow-900">
+                                                <button onclick="deleteTicket({{ $ticket->id }})"
+                                                        class="text-red-600 hover:text-red-900">
                                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd"
-                                                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                                               clip-rule="evenodd" />
                                                     </svg>
                                                 </button>
