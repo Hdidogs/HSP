@@ -1,7 +1,17 @@
 <x-app-layout>
     <div class="py-12 bg-gray-100">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">Activités</h1>
+
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center flex-grow">Activités</h1>
+                <a href="{{ route('activite.create') }}"
+                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center transition duration-300 ease-in-out">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    Créer une nouvelle activité
+                </a>
+            </div>
 
             @if(session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
@@ -9,6 +19,8 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+            <br>
 
             <div class="relative mb-6">
                 <input type="text" id="searchInput" placeholder="Rechercher une activité..."
@@ -71,18 +83,6 @@
                         <p class="text-gray-600">Aucune activité pour le moment. 😕</p>
                     </div>
                 @endforelse
-            </div>
-
-            <div class="mt-8 flex justify-end">
-                <a href="{{ route('activite.create') }}"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center transition duration-300 ease-in-out">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    Créer une nouvelle activité
-                </a>
             </div>
         </div>
     </div>
