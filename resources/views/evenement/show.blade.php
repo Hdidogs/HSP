@@ -74,12 +74,18 @@
                                 </button>
                             </form>
                         @else
-                            <form action="{{ route('evenement.inscription', $evenement) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" {{ $evenement->nb_place <= 0 ? 'disabled' : '' }}>
-                                    {{ $evenement->nb_place <= 0 ? 'Complet' : 'S\'inscrire' }}
+                            @if(\Carbon\Carbon::parse($evenement->date)->subDay() < now())
+                                <button class="bg-red-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                                    Clôturé
                                 </button>
-                            </form>
+                            @else
+                                <form action="{{ route('evenement.inscription', $evenement) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" {{ $evenement->nb_place <= 0 ? 'disabled' : '' }}>
+                                        {{ $evenement->nb_place <= 0 ? 'Complet' : 'S\'inscrire' }}
+                                    </button>
+                                </form>
+                            @endif
                         @endif
                     @elseif($evenement->isCreator)
                         <a href="{{ route('evenement.inscrits', $evenement) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 inline-flex items-center">
