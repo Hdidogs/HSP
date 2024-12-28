@@ -117,7 +117,7 @@
                                             class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                                             Voir plus
                                         </a>
-                                        @if($evenement->date < now())
+                                        @if(\Carbon\Carbon::parse($evenement->date)->subDay() < now())
                                             <span class="bg-gray-500 text-white font-bold py-2 px-4 rounded opacity-75">
                                                 Clôturé
                                             </span>
