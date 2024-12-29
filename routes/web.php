@@ -15,6 +15,7 @@ use App\Http\Controllers\OffreController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\GestionnaireController;
 use App\Http\Controllers\SpecialiteController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\EvenementAvantController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\OffreAvantController;
@@ -42,6 +43,9 @@ Route::put('ticket/{ticket}', [TicketController::class, 'update'])->name('ticket
 Route::get('ticket/{ticket}/show', [TicketController::class, 'show'])->name('ticket.show');
 Route::get('ticket/destroy/{ticket}', [TicketController::class, 'destroy'])->name('ticket.destroy');
 use App\Http\Controllers\MessagesTicket;
+
+Route::get('user/validate/{userId}', [UserController::class, 'validate'])->name('user.validate');
+Route::get('user/reject/{userId}', [UserController::class, 'reject'])->name('user.reject');
 
 // Routes for MessagesTicket
 Route::post('messagesticket/store', [MessagesTicket::class, 'store'])->name('messagesticket.store');

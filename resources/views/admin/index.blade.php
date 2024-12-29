@@ -82,7 +82,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($users->where('email_verified_at', null) as $user)
+                                    @foreach($users->where('ref_role', '1') as $user)
                                         <tr>
                                             <td class="border-b border-gray-200 px-6 py-4">{{ $user->id }}</td>
                                             <td class="border-b border-gray-200 px-6 py-4">{{ $user->nom }}
@@ -103,11 +103,10 @@
                                                                 clip-rule="evenodd" />
                                                         </svg>
                                                     </a>
-                                                    <button onclick="editUser({{ $user->id }})"
+                                                    <button onclick="validateUser({{ $user->id }})"
                                                         class="text-blue-600 hover:text-blue-900">
-                                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path
-                                                                d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                                         </svg>
                                                     </button>
                                                     <form action="{{ route('admin.users.destroy', $user->id) }}"
@@ -243,8 +242,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($users->whereNotNull('email_verified_at') as $user)
-                                        <tr>
+                                    @foreach($users->reject(function ($user) {
+                                        return $user->ref_role == '1';
+                                    }) as $user)                                        <tr>
                                             <td class="border-b border-gray-200 px-6 py-4">{{ $user->id }}</td>
                                             <td class="border-b border-gray-200 px-6 py-4">{{ $user->nom }}
                                                 {{ $user->prenom }}
@@ -617,6 +617,16 @@
             window.location.href = "ticket/destroy/" + ticketId;
         }
 
+        function validateUser(userId) {
+            window.location.href = "user/validate/" + userId;
+        }
+
+        function cancelValidation(userId) {
+            if (confirm('Êtes-vous sûr de vouloir annuler la validation pour cet utilisateur ?')) {
+                window.location.href = "user/reject/" + userId;
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             const tabs = document.querySelectorAll('.tab-button');
             const contents = document.querySelectorAll('.tab-content');
@@ -742,18 +752,6 @@
 
             closeContactModal();
             alert('Email sent successfully!');
-        }
-
-        function editUser(userId) {
-            // Implement the edit user logic here
-            console.log('Editing user with ID:', userId);
-        }
-
-        function cancelValidation(userId) {
-            if (confirm('Êtes-vous sûr de vouloir annuler la validation pour cet utilisateur ?')) {
-                // Implement the cancel validation logic here
-                console.log('Cancelling validation for user with ID:', userId);
-            }
         }
     </script>
 
