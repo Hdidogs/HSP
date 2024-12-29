@@ -22,7 +22,7 @@ class EtablissementController extends Controller
 
         return response()->json([
             'success' => true,
-            'etablissement' => $etablissement
+            'item' => $etablissement
         ]);
     }
 }

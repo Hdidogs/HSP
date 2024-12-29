@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Etudiant;
+use App\Models\Medecin;
+use App\Models\Partenaire;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,8 +30,13 @@ class AdminController extends Controller
             abort(403, 'Accès non autorisé.');
         }
 
+        $etudiant = Etudiant::where('ref_user', $id)->first();
+        $partenaire = Partenaire::where('ref_user', $id)->first();
+        $medecin = Medecin::where('ref_user', $id)->first();
+
+
         $user = User::findOrFail($id);
-        return view('admin.show', compact('user'));
+        return view('admin.show', compact('user', $etudiant ? 'etudiant' : ($partenaire ? 'partenaire' : ($medecin ? 'medecin' : 'user'))));
     }
 
     public function cancelValidation($id)

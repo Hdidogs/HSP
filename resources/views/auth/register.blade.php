@@ -82,7 +82,7 @@
                         <select id="ref_specialite" name="ref_specialite" class="block mt-1 w-full">
                             <option value="choix" disabled selected>Choisissez votre specialité</option>
                             @foreach($specialites as $specialite)
-                                <option value="{{ $specialite->id }}">{{ $specialite->nom }}</option>
+                                <option value="{{ $specialite->id }}">{{ $specialite->libelle }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -189,7 +189,7 @@
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div class="mt-3 text-center">
             <h3 class="text-lg leading-6 font-medium text-gray-900">Ajouter une nouvelle Entreprise</h3>
-            <form id="newSpecialiteForm" class="mt-2 text-left">
+            <form id="newEntrepriseForm" class="mt-2 text-left">
                 @csrf
                 <div class="mt-2">
                     <x-label for="nom" value="{{ __('Nom') }}" />
@@ -220,7 +220,7 @@
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div class="mt-3 text-center">
             <h3 class="text-lg leading-6 font-medium text-gray-900">Ajouter un nouvelle Hopital</h3>
-            <form id="newSpecialiteForm" class="mt-2 text-left">
+            <form id="newHopitalForm" class="mt-2 text-left">
                 @csrf
                 <div class="mt-2">
                     <x-label for="nom" value="{{ __('Nom') }}" />
@@ -331,7 +331,7 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success) {
+                    if (data.success === true || data.success === 'true') {
                         // Ajoute la nouvelle option au select
                         var select = document.getElementById(selectId);
                         var newOption = document.createElement('option');
@@ -340,7 +340,7 @@
                         select.appendChild(newOption);
 
                         // Ferme le modal
-                        closeModal(formId.replace('Form', 'Modal'));
+                        closeModal(formId.toLowerCase().replace('new', '').replace('form', 'Modal'));
 
                         // Réinitialise le formulaire
                         form.reset();
@@ -355,8 +355,8 @@
         });
     }
 
-    handleSubmit('newSpecialiteForm', '/specialite/create', 'ref_specialite');
-    handleSubmit('newHopitalForm', '/hopital/create', 'ref_hopital');
-    handleSubmit('newEntrepriseForm', '/entreprise/create', 'ref_entreprise');
-    handleSubmit('newEtablissementForm', '/etablissement/create', 'ref_etablissement');
+    handleSubmit('newSpecialiteForm', '{{ route("specialite.store") }}', 'ref_specialite');
+    handleSubmit('newHopitalForm', '{{ route("hopital.store") }}', 'ref_hopital');
+    handleSubmit('newEntrepriseForm', '{{ route("entreprise.store") }}', 'ref_entreprise');
+    handleSubmit('newEtablissementForm', '{{ route("etablissement.store") }}', 'ref_etablissement');
 </script>

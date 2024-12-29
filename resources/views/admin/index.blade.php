@@ -614,16 +614,16 @@
 
     <script>
         function deleteTicket(ticketId) {
-            window.location.href = "ticket/destroy/" + ticketId;
+            window.location.href = "../ticket/destroy/" + ticketId;
         }
 
         function validateUser(userId) {
-            window.location.href = "user/validate/" + userId;
+            window.location.href = "../user/validate/" + userId;
         }
 
         function cancelValidation(userId) {
             if (confirm('Êtes-vous sûr de vouloir annuler la validation pour cet utilisateur ?')) {
-                window.location.href = "user/reject/" + userId;
+                window.location.href = "../user/reject/" + userId;
             }
         }
 

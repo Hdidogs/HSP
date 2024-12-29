@@ -30,8 +30,8 @@ Route::get('/evenement/{evenement}/inscrits', [EvenementController::class, 'insc
 Route::get('/offres/{offre}/postuler', [OffreController::class, 'showPostulerForm'])->name('offre.postuler');
 Route::post('/offres/{offre}/postuler', [OffreController::class, 'postuler'])->name('offre.postuler.submit');
 Route::put('/offres/{offre}/cloturer', [OffreController::class, 'cloturer'])->name('offre.cloturer');
-Route::resource('specialite', SpecialiteController::class);
-Route::resource('gestionnaire', GestionnaireController::class);
+//Route::resource('specialite', SpecialiteController::class);
+//Route::resource('gestionnaire', GestionnaireController::class);
 Route::get('ticket', [TicketController::class, "ticketByUser"])->name('ticket.index');
 Route::get('ticket/close/{ticket}', [TicketController::class, 'close'])->name('ticket.close');
 Route::get('ticket/open/{ticket}', [TicketController::class, 'open'])->name('ticket.open');
@@ -50,14 +50,19 @@ Route::get('user/reject/{userId}', [UserController::class, 'reject'])->name('use
 // Routes for MessagesTicket
 Route::post('messagesticket/store', [MessagesTicket::class, 'store'])->name('messagesticket.store');
 
-Route::resource('hopitaux', HopitalController::class);
+//Route::resource('hopitaux', HopitalController::class);
 Route::resource('post', PostController::class);
 Route::resource('forum', ForumController::class);
 Route::resource('offre', OffreController::class);
 //Route::resource('evenement', EvenementController::class); // PAS TOUCHER
-Route::resource('entreprise', EntrepriseController::class);
+//Route::resource('entreprise', EntrepriseController::class);
 //Route::resource('etablissement', EtablissementController::class);
+
+Route::post('/specialite/create', [SpecialiteController::class, 'store'])->name('specialite.store');
+Route::post('/hopital/create', [HopitalController::class, 'store'])->name('hopital.store');
+Route::post('/entreprise/create', [EntrepriseController::class, 'store'])->name('entreprise.store');
 Route::post('/etablissement/create', [EtablissementController::class, 'store'])->name('etablissement.store');
+
 Route::resource('activite', ActiviteController::class);
 Route::get('joboffers', [OffreController::class, 'index'])->name('joboffers.index');
 Route::get('activity', [ActiviteController::class, 'index'])->name('activity.index');
@@ -109,3 +114,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/admin/{id}', [AdminController::class, 'show'])->name('admin.show');
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.users.destroy');
 });
+
+Route::get('/cvs/{filename}', function ($filename) {
+    $path = 'storage/app/private/cvs/' . $filename;
+
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    return response()->file($path);
+})->name('cvs.show');
