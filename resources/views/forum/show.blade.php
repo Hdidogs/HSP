@@ -29,12 +29,15 @@
                                 <div class="bg-gray-100 p-4 rounded-lg" onclick="redirectToRegister({{ $message->id }}, {{ $forum->id }})">
                                     <div class="flex justify-between items-start">
                                         <div>
-                                            <p class="font-semibold">{{ $message->sender->nom . " " . $message->sender->prenom }}</p>
+                                            <div class="flex justify-between items-center">
+                                                <p class="font-semibold">{{ $message->sender->nom . " " . $message->sender->prenom }}</p>
+                                                <p class="text-sm text-gray-600 ml-4">(Cliquer pour répondre)</p>
+                                            </div>
                                             <p class="text-sm text-gray-600">{{ $message->created_at->diffForHumans() }}</p>
                                         </div>
                                         <span class="text-sm font-medium text-gray-500 bg-white rounded-full px-3 py-1">
                                             <div class="flex space-x-2">
-                                                <a href="{{ route('forum.edit', $forum->id) }}"
+                                                <a href="{{ route('forum.update', $forum->id) }}"
                                                    class="text-yellow-600 hover:text-yellow-800 transition duration-300 ease-in-out">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                                          fill="currentColor">
@@ -43,7 +46,7 @@
                                                     </svg>
                                                 </a>
                                                 <form id="delete-form-{{ $forum->id }}"
-                                                      action="{{ route('forum.destroy', $forum->id) }}" method="POST"
+                                                      action="{{ route('messages.destroy', $message->id) }}" method="POST"
                                                       class="inline-block">
                                                     @csrf
                                                     @method('DELETE')

@@ -52,7 +52,8 @@ Route::resource('forum', ForumController::class);
 Route::resource('offre', OffreController::class);
 //Route::resource('evenement', EvenementController::class); // PAS TOUCHER
 Route::resource('entreprise', EntrepriseController::class);
-Route::resource('etablissement', EtablissementController::class);
+//Route::resource('etablissement', EtablissementController::class);
+Route::post('/etablissement/create', [EtablissementController::class, 'store'])->name('etablissement.store');
 Route::resource('activite', ActiviteController::class);
 Route::get('joboffers', [OffreController::class, 'index'])->name('joboffers.index');
 Route::get('activity', [ActiviteController::class, 'index'])->name('activity.index');

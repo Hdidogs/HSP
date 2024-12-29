@@ -9,13 +9,13 @@ class Etablissement extends Model
 {
     use HasFactory;
 
-    // Définit les champs qui peuvent être assignés en masse
     protected $fillable = [
         'nom',
         'adresseweb',
+        'rue',
+        'adresse',
         'ville',
-        'code_postal',
-        'pays'
+        'cp',
     ];
 }
 

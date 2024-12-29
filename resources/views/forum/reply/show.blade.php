@@ -30,7 +30,7 @@
                                         </div>
                                         <span class="text-sm font-medium text-gray-500 bg-white rounded-full px-3 py-1">
                                             <div class="flex space-x-2">
-                                                <a href="{{ route('forum.edit', $forum->id) }}"
+                                                <a href="{{ route('messages.update', $reply->id) }}"
                                                    class="text-yellow-600 hover:text-yellow-800 transition duration-300 ease-in-out">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                                          fill="currentColor">
@@ -38,14 +38,14 @@
                                                             d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                                                     </svg>
                                                 </a>
-                                                <form id="delete-form-{{ $forum->id }}"
-                                                      action="{{ route('forum.destroy', $forum->id) }}" method="POST"
+                                                <form id="delete-form-{{ $reply->id }}"
+                                                      action="{{ route('messages.destroy', $reply->id) }}" method="POST"
                                                       class="inline-block">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button"
                                                             class="text-red-600 hover:text-red-800 transition duration-300 ease-in-out"
-                                                            onclick="confirmDelete('delete-form-{{ $forum->id }}')">
+                                                            onclick="confirmDelete('delete-form-{{ $reply->id }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                                              fill="currentColor">
                                                             <path fill-rule="evenodd"
