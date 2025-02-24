@@ -40,30 +40,31 @@ class ReplyController extends Controller
 
     public function edit($id)
     {
-        // Retrieve the reply
         $reply = Message::findOrFail($id);
-
-        // Return the edit view with the reply data
-        return view('replies.edit', compact('reply'));
+        return view('forum.reply.edit', compact('reply'));
     }
 
     public function update(Request $request, $id)
     {
-        // Validate the request data
         $validatedData = $request->validate([
             'libelle' => 'required|string|max:255',
         ]);
 
-        // Retrieve the reply
         $reply = Message::findOrFail($id);
 
-        // Update the reply
         $reply->update([
             'libelle' => $validatedData['libelle'],
         ]);
 
-        // Redirect back with a success message
-        return redirect()->back()->with('success', 'Reply updated successfully.');
+        $parentMessageId = \App\Models\Reply::where('ref_reply', $reply->id)
+            ->value('ref_message');
+
+        return redirect()
+            ->route('forum.reply.show', [
+                'forum' => $reply->ref_forum,
+                'message' => $parentMessageId,
+            ])
+            ->with('success', 'Reply updated successfully.');
     }
 
     public function destroy($id)

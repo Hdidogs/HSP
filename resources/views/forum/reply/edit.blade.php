@@ -6,7 +6,7 @@
                     <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
                         Edit Reply
                     </h1>
-                    <form method="POST" action="{{ route('replies.update', $reply->id) }}" class="mt-6">
+                    <form method="POST" action="{{ route('reply.update', $reply->id) }}" class="mt-6">
                         @csrf
                         @method('PUT')
                         <div class="flex rounded-full shadow-sm">

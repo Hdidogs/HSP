@@ -12,7 +12,7 @@
 
     <div class="py-12 bg-gray-100">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">Offres d'emploi 💼</h1>
+            <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">Offres d'emploi</h1>
 
             @if(session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
@@ -22,7 +22,7 @@
             @endif
 
             <div class="relative mb-6">
-                <input type="text" id="searchInput" placeholder="Rechercher une offre... 🔍"
+                <input type="text" id="searchInput" placeholder="Rechercher une offre..."
                     class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                 <svg class="absolute left-3 top-2.5 text-gray-400 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20" fill="currentColor">
@@ -137,7 +137,7 @@
                 </div>
             @else
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6 text-center">
-                    <p class="text-gray-600">Aucune offre d'emploi pour le moment. 😕</p>
+                    <p class="text-gray-600">Aucune offre d'emploi pour le moment.</p>
                 </div>
             @endif
 

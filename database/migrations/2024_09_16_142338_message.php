@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('upvote');
             $table->integer('downvote');
             $table->foreignId('ref_user')->constrained('users');
-            $table->foreignId('ref_forum')->constrained('forums');
+            $table->foreignId('ref_forum')->constrained('forums')->onDelete('cascade');
             $table->timestamps();
         });
 

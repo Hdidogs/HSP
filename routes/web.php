@@ -6,6 +6,7 @@ use App\Http\Controllers\HopitalController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\TicketController;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActiviteController;
 use App\Http\Controllers\EtablissementController;
@@ -95,6 +96,23 @@ Route::post('reply', [ReplyController::class, 'store'])->name('reply.store');
 
 Route::get('/forum/{forum}', [ForumController::class, 'show'])->name('forum.show');
 Route::get('/forum/{forum}/{message}', [ReplyController::class, 'show'])->name('forum.reply.show');
+Route::get('/forum/{forum}/edit', [ForumController::class, 'edit'])->name('forum.edit');
+Route::put('/forum/{forum}', [ForumController::class, 'update'])->name('forum.update');
+Route::get('/messages/{message}/edit', [MessageController::class, 'edit'])->name('messages.edit');
+Route::put('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
+Route::post('/reply', [ReplyController::class, 'store'])->name('reply.store');
+Route::get('/reply/{reply}/edit', [ReplyController::class, 'edit'])->name('reply.edit');
+Route::put('/reply/{reply}', [ReplyController::class, 'update'])->name('reply.update');
+Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy');
+Route::get('/forum/{forum}/{message}', [ReplyController::class, 'show'])->name('forum.reply.show');
+
+Route::get('/cvs/{filename}', function ($filename) {
+    $path = storage_path('app/public/cvs/' . $filename);
+    if (!File::exists($path)) {
+        abort(404);
+    }
+    return response()->file($path);
+})->name('cvs.show');
 
 Route::delete('/evenements/{evenement}/users/{user}', [EvenementController::class, 'removeUserFromEvent'])
     ->name('evenement.removeUserFromEvent');

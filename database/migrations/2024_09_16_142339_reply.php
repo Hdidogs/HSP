@@ -12,13 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('replies', function (Blueprint $table) {
-            $table->unsignedBigInteger('ref_message'); // Ensure this matches the data type of 'id' in 'messages' table
-            $table->unsignedBigInteger('ref_reply'); // Ensure this matches the data type of 'id' in 'messages' table
-
+            $table->unsignedBigInteger('ref_message');
+            $table->unsignedBigInteger('ref_reply');
             $table->timestamps();
-
-            $table->foreign('ref_message')->references('id')->on('messages');
-            $table->foreign('ref_reply')->references('id')->on('messages');
+            $table->foreign('ref_message')->references('id')->on('messages')->onDelete('cascade');
+            $table->foreign('ref_reply')->references('id')->on('messages')->onDelete('cascade');
 
             $table->primary(['ref_message', 'ref_reply']);
         });

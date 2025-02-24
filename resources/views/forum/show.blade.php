@@ -26,33 +26,40 @@
                             @foreach($messages as $message)
                                 @if(\App\Models\Reply::where("ref_reply", $message->id)->count() > 0)
                                 @else
-                                <div class="bg-gray-100 p-4 rounded-lg" onclick="redirectToRegister({{ $message->id }}, {{ $forum->id }})">
-                                    <div class="flex justify-between items-start">
-                                        <div>
-                                            <div class="flex justify-between items-center">
+                                    <div class="bg-gray-100 p-4 rounded-lg">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <div class="flex justify-between items-center">
                                                 <p class="font-semibold">{{ $message->sender->nom . " " . $message->sender->prenom }}</p>
                                                 <p class="text-sm text-gray-600 ml-4">(Cliquer pour répondre)</p>
                                             </div>
                                             <p class="text-sm text-gray-600">{{ $message->created_at->diffForHumans() }}</p>
                                         </div>
                                         <span class="text-sm font-medium text-gray-500 bg-white rounded-full px-3 py-1">
+
                                             <div class="flex space-x-2">
-                                                <a href="{{ route('forum.update', $forum->id) }}"
+                                                <button type="button" onclick="redirectToRegister({{ $message->id }}, {{ $forum->id }})" class="text-gray-700 hover:text-yellow-800 transition duration-300 ease-in-out">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+
+                                                <a href="{{ route('messages.edit', $message->id) }}"
                                                    class="text-yellow-600 hover:text-yellow-800 transition duration-300 ease-in-out">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                                          fill="currentColor">
-                                                        <path
-                                                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                                                     </svg>
                                                 </a>
-                                                <form id="delete-form-{{ $forum->id }}"
+
+                                                <form id="delete-form-{{ $message->id }}"
                                                       action="{{ route('messages.destroy', $message->id) }}" method="POST"
                                                       class="inline-block">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button"
                                                             class="text-red-600 hover:text-red-800 transition duration-300 ease-in-out"
-                                                            onclick="confirmDelete('delete-form-{{ $forum->id }}')">
+                                                            onclick="confirmDelete('delete-form-{{ $message->id }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                                              fill="currentColor">
                                                             <path fill-rule="evenodd"
@@ -112,6 +119,14 @@
 
         function redirectToRegister(messageId, forumId) {
             window.location.href = "{{ url('forum') }}/" + forumId + "/" + messageId;
+        }
+    </script>
+
+    <script>
+        function confirmDelete(formId) {
+            if (confirm("Voulez-vous vraiment supprimer ce message ?")) {
+                document.getElementById(formId).submit();
+            }
         }
     </script>
 </x-app-layout>

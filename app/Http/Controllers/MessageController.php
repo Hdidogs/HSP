@@ -39,7 +39,7 @@ class MessageController extends Controller
     // Met à jour un message existant
     public function update(Request $request, Message $message)
     {
-        $this->authorize('update', $message);
+        //$this->authorize('update', $message);
 
         $request->validate([
             'libelle' => 'required|string',
@@ -49,17 +49,26 @@ class MessageController extends Controller
             'libelle' => $request->libelle,
         ]);
 
-        return $message;
+        return redirect()
+            ->route('forum.show', ['forum' => $message->ref_forum])
+            ->with('success', 'Message mis à jour avec succès.');
+    }
+
+    // Affiche le formulaire d'édition d'un message
+    public function edit(Message $message)
+    {
+        //$this->authorize('update', $message);
+        return view('messages.edit', compact('message'));
     }
 
     // Supprime un message
     public function destroy(Message $message)
     {
-        $this->authorize('delete', $message);
+        //$this->authorize('delete', $message);
 
         $message->delete();
 
-        return response()->json(['message' => 'Message deleted successfully']);
+        return redirect()->back()->with('success', 'Message supprimé avec succès.');
     }
 
     // Incrémente le nombre d'upvotes d'un message
