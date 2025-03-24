@@ -29,7 +29,7 @@ HSP est une application web basée sur Laravel qui facilite la gestion des servi
 - Node.js et NPM
 
 ### Étapes d'Installation :
-1. Cloner le dépôt : `git clone https://github.com/votrenomdutilisateur/HSP.git`
+1. Cloner le dépôt : `git clone https://github.com/hdidogs/HSP.git`
 2. Naviguer vers le répertoire du projet : `cd HSP`
 3. Installer les dépendances PHP : `composer install`
 4. Installer les dépendances JavaScript : `npm install && npm run dev`
