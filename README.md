@@ -115,9 +115,6 @@ Pour une documentation détaillée du schéma de la base de données, consultez 
 - Fonctionnalité "Se souvenir de moi"
 
 ### Fonctionnalités de Sécurité :
-- Protection CSRF
 - Protection XSS
 - Protection contre l'injection SQL
-- Limitation de débit
 - Contrôle d'accès basé sur les rôles
-- Authentification par token API
