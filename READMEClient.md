@@ -166,8 +166,6 @@ Pour renforcer la sécurité de votre compte :
 2. Entrez votre adresse e-mail
 3. Suivez les instructions envoyées par e-mail
 
-### Comment contacter l'assistance technique ?
-Pour toute question technique, créez un ticket dans la section "Support" ou envoyez un e-mail à support@hsp-plateforme.com.
 
 ### Comment mettre à jour mes informations professionnelles ?
 Accédez à votre profil, cliquez sur "Modifier le profil" et mettez à jour la section "Informations professionnelles".
